@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Контент {% endblock %}
-{% block header %} Контент {% endblock %}
+{% block title %} Новости {% endblock %}
+{% block header %} Новости {% endblock %}
 {% block body %}
 
 	{% if isPermission('content-control-all') or isPermission('content-control-own') %}
-		<a href="{{ path('content_add') }}">
-			<i class="fa fa-plus-square" aria-hidden="true"></i> Добавить контент
+		<a href="{{ path('content_add', {'type': type}) }}">
+			<i class="fa fa-plus-square" aria-hidden="true"></i> Добавить новость
 		</a>
 		<br><br>
 	{% endif %}
@@ -16,7 +16,7 @@
 			<h3>{{ content.title }}</h3>
 			{% if content.image %}
 				<div class="content-image">
-					<img src="../../public/images/content/content/{{ content.image }}">
+					<img src="../../public/images/content/{{ type }}/{{ content.image }}">
 				</div>
 			{% endif %}
 			<div class="content-article">
@@ -25,10 +25,10 @@
 			<div class="content-info">
 				{% if isPermission('content-control-all') or (isPermission('content-control-own') and content.user_id == app.user.id) %}
 				<span class='content-control'>
-					<a href='{{ path('content_edit', {'id': content.id}) }}'>
+					<a href='{{ path('content_edit', {'type': type, 'id': content.id}) }}'>
 						<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 					</a>
-					<a href='{{ path('content_delete', {'id': content.id}) }}'>
+					<a href='{{ path('content_delete', {'type': type, 'id': content.id}) }}'>
 						<i class="fa fa-trash-o" aria-hidden="true"></i>
 					</a>
 				</span>

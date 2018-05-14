@@ -8,9 +8,9 @@ use App\Model\Content;
 
 class ContentManager extends Manager
 {
-	private $dir = __DIR__.'/../../public/images/content/content';
+	private $dir = __DIR__.'/../../public/images/content';
 
-	public function add($request)
+	public function add($type, $request)
 	{
 		// prepare data
 		$title = trim($request->get('title'));
@@ -35,7 +35,7 @@ class ContentManager extends Manager
 
 		if ($uploadedFile) {
 			$upload = $this->container['upload'];
-			$file = $upload->upload($uploadedFile, $this->dir, 150000);
+			$file = $upload->upload($uploadedFile, $this->dir.'/'.$type, 150000);
 			if ($file[0]) {
 				$content->image = $file[1];
 			} else {
@@ -43,6 +43,7 @@ class ContentManager extends Manager
 			}
 		}
 
+		$content->type = $type;
 		$content->title = $title;
 		$content->article = $article;
 		$content->user_id = $user->id;
@@ -51,12 +52,13 @@ class ContentManager extends Manager
 		return;
 	}
 
-	public function edit($id, $request)
+	public function edit($type, $id, $request)
 	{
 		// prepare data
 		$id = (int) $id;
 		$title = trim($request->get('title'));
 		$article = trim($request->get('article'));
+
 
 		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
 			return $error;
@@ -77,11 +79,11 @@ class ContentManager extends Manager
 
 		if ($uploadedFile) {
 			$upload = $this->container['upload'];
-			$file = $upload->upload($uploadedFile, $this->dir, 150000);
+			$file = $upload->upload($uploadedFile, $this->dir.'/'.$type, 150000);
 			if ($file[0]) {
 				$oldimage = $content->image;
 				if ($oldimage)
-					$upload->delete($oldimage, $this->dir);
+					$upload->delete($oldimage, $this->dir.'/'.$type);
 
 				$content->image = $file[1];
 			} else {
@@ -96,7 +98,7 @@ class ContentManager extends Manager
 		return;
 	}
 
-	public function delete($id, $request)
+	public function delete($type, $id, $request)
 	{
 		// prepare data
 		$id = (int) $id;
@@ -114,7 +116,7 @@ class ContentManager extends Manager
 		return;
 	}
 
-	public function deleteImage($id, $request)
+	public function deleteImage($type, $id, $request)
 	{
 		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
 			return $error;
@@ -130,7 +132,7 @@ class ContentManager extends Manager
 		
 		$image = $content->image;
 		if ($image)
-			$upload->delete($image, $this->dir);
+			$upload->delete($image, $this->dir.'/'.$type);
 		else
 			return 'Изображение не установлено';
 

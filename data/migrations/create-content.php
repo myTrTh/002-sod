@@ -12,6 +12,7 @@ $container->get()['db'];
 
 Capsule::schema()->create('contents', function($table){
 	$table->increments('id');
+	$table->string('type');
 	$table->string('title');
 	$table->text('article');
 	$table->integer('user_id');

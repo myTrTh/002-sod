@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Редактировать контент {% endblock %}
-{% block header %} Редактировать контент {% endblock %}
+{% block title %} Редактировать новость {% endblock %}
+{% block header %} Редактировать новость {% endblock %}
 {% block body %}
 
-	<a href="{{ path('content_list') }}">Назад к контенту</a>
+	<a href="{{ path('content_list', {'type': type}) }}">Назад к новостям</a>
 	<br><br>
 	{% if error %}
 		<div class="message-error">{{ error }}</div><br>
 	{% endif %}
 
-	<form method='post' enctype='multipart/form-data' action='{{ path('content_edit', {'id': content.id }) }}'>
+	<form method='post' enctype='multipart/form-data' action='{{ path('content_edit', {'type': type, 'id': content.id }) }}'>
 		<label>Заголовок<br><input type='text' name='title' value='{{ content.title }}'></label>
 		<label>Контент<br><textarea type='text' name='article'>{{ content.article }}</textarea></label>
 		<input type="file" name="userfile"><br>
@@ -19,12 +19,12 @@
 	</form>
 	{% if content.image %}
 		<br>
-		<form method="post" action="{{ path('content_edit', {'id': content.id }) }}">
-			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>				
+		<form method="post" action="{{ path('content_edit', {'type': type, 'id': content.id }) }}">
+			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
 			<input type="submit" name="submit_delete_image" value="x">
 		</form>
 		<div class="content-image" >
-			<img src="../../public/images/content/content/{{ content.image }}">
+			<img src="../../public/images/content/{{ type }}/{{ content.image }}">
 		</div>			
 	{% endif %}	
 

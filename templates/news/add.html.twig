@@ -1,21 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Добавить контент {% endblock %}
-{% block header %} Добавить контент {% endblock %}
+{% block title %} Добавить новость {% endblock %}
+{% block header %} Добавить новость {% endblock %}
 {% block body %}
 
-	<a href="{{ path('content_list') }}">Назад к контенту</a>
+	<a href="{{ path('content_list', {'type': type}) }}">Назад к новостям</a>
 	<br>
 	{% if error %}
 		<div class="message-error">{{ error }}</div>
 	{% endif %}<br>
 
-	<form method='post' enctype='multipart/form-data' action='{{ path('content_add') }}'>
+	<form method='post' enctype='multipart/form-data' action='{{ path('content_add', {'type': type}) }}'>
 		<label>Заголовок<br><input type='text' name='title' value='{{ lastTitle }}'></label>
 		<label>Контент<br><textarea name='article'>{{ lastArticle }}</textarea></label>
 		<input type="file" name="userfile"><br>
 		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
-		<input type='submit' name='submit_content_add' value='Добавить контент'>
+		<input type='submit' name='submit_content_add' value='Добавить новость'>
 	</form>
 
 {% endblock %}
