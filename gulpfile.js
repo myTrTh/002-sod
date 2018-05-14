@@ -14,7 +14,7 @@ var gulp         = require('gulp'), // Подключаем Gulp
 
 gulp.task('watch', function() {
 	browserSync.init({
-		proxy: "base/"
+		proxy: "sodomania/"
 	});
 
 	gulp.watch('assets/scss/*.scss', ['sass']);

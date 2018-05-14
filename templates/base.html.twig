@@ -17,14 +17,14 @@
 						<i class="fa fa-bars color-white" aria-hidden="true"></i>
 					</div>
 				</li>
-				<li><a href="{{ path('content_list') }}">КОНТЕНТ</a></li>
-				<li><a href="{{ path('guestbook') }}">ГОСТЕВАЯ</a></li>
-				<li><a href="#">ДРУГОЕ</a></li>
-				<li><a href="#">ДРУГОЕ</a></li>
-				<li><a href="#">ДРУГОЕ</a></li>
-				<li><a href="#">ДРУГОЕ</a></li>
-				<li><a href="#">ДРУГОЕ</a></li>
-				<li><a href="#">ДРУГОЕ</a></li>
+				<li><a href="{{ path('content_list') }}">НОВОСТИ</a></li>
+				<li><a href="#">ГРУППА</a></li>
+				<li><a href="#">ИСТОРИЯ</a></li>
+				<li><a href="#">АЛЬБОМЫ</a></li>
+				<li><a href="#">ФАКТЫ</a></li>
+				<li><a href="#">МАТЕРИАЛЫ</a></li>
+				<li><a href="{{ path('guestbook') }}">ГОСТЕВАЯ</a></li>				
+				<li><a href="#">ССЫЛКИ</a></li>
 				{% if app.user %}
 					<li><a href="{{ path('user_profile') }}"><i class="fa fa-user" aria-hidden="true"></i></a></li>
 					<li><a href="{{ path('auth_logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
@@ -43,7 +43,7 @@
 				<div class="block">sidebar 2</div>
 			</aside>
 		</section>
-		<footer>{{ 'now'|date('Y') }} myBASE</footer>
+		<footer>2013 - {{ 'now'|date('Y') }} © RUSSIAN FAN SITE SODOM </footer>
 	</div>
 	<script type="text/javascript" src="../public/js/jquery.min.js"></script>
 	<script type="text/javascript" src="../public/js/libs.js"></script>
