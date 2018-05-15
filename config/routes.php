@@ -45,10 +45,10 @@ $routes->add('admin_users', new Route('/admin', array('_controller' => 'App\Cont
 $routes->add('admin_user', new Route('/admin/user/{id}', array('_controller' => 'App\Controller\Admin\AdminController::user'), array('id' => '[0-9]+')));
 
 // content routes
-$routes->add('content_list', new Route('/{type}/{page}', array('_controller' => 'App\Controller\ContentController::list', 'type' => 'news', 'page' => 1), array('type' => 'news', 'page' => '[0-9]+')));
-$routes->add('content_add', new Route('/{type}/add', array('_controller' => 'App\Controller\ContentController::add', 'type' => 'news')));
-$routes->add('content_edit', new Route('/{type}/edit/{id}', array('_controller' => 'App\Controller\ContentController::edit', 'type' => 'news'), array('type' => 'news', 'id' => '[0-9]+')));
-$routes->add('content_delete', new Route('/{type}/delete/{id}', array('_controller' => 'App\Controller\ContentController::delete', 'type' => 'news'), array('type' => 'news', 'id' => '[0-9]+')));
+$routes->add('content_list', new Route('/{type}/{page}', array('_controller' => 'App\Controller\ContentController::list', 'type' => 'news', 'page' => 1), array('type' => 'news|band|history|albums|stuff|links', 'page' => '[0-9]+')));
+$routes->add('content_add', new Route('/{type}/add', array('_controller' => 'App\Controller\ContentController::add', 'type' => 'news'), array('type' => 'news|band|history|albums|stuff|links')));
+$routes->add('content_edit', new Route('/{type}/edit/{id}', array('_controller' => 'App\Controller\ContentController::edit', 'type' => 'news'), array('type' => 'news|band|history|albums|stuff|links', 'id' => '[0-9]+')));
+$routes->add('content_delete', new Route('/{type}/delete/{id}', array('_controller' => 'App\Controller\ContentController::delete', 'type' => 'news'), array('type' => 'news|band|history|albums|stuff|links', 'id' => '[0-9]+')));
 
 // guestbook routes
 $routes->add('guestbook', new Route('/guestbook/{page}', array('_controller' => 'App\Controller\GuestbookController::guestbook', 'page' => 1), array('page' => '[0-9]+')));

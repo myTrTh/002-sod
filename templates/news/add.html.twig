@@ -9,7 +9,6 @@
 	{% if error %}
 		<div class="message-error">{{ error }}</div>
 	{% endif %}<br>
-
 	<form method='post' enctype='multipart/form-data' action='{{ path('content_add', {'type': type}) }}'>
 		<label>Заголовок<br><input type='text' name='title' value='{{ lastTitle }}'></label>
 		<label>Контент<br><textarea name='article'>{{ lastArticle }}</textarea></label>
