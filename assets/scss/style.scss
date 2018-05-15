@@ -314,6 +314,28 @@ input[type='submit']:hover {
 	float: left;
 }
 
+// band
+.content-band {
+	.content-article {
+		font-size: .85em;
+	}
+}
+
+// history
+.content-history {
+	.content-article {
+		text-align: justify;
+	}
+}
+
+// albums
+.content-albums {
+	td {
+		font-size: .9em;
+		vertical-align: top;		
+	}
+}
+
 // pagenavigation
 .pagenavigation {
 	span {
@@ -335,4 +357,8 @@ input[type='submit']:hover {
 		border: solid 1px $color_grey2;
 		cursor: pointer;
 	}
+}
+
+.bbunderline {
+	text-decoration: underline;
 }

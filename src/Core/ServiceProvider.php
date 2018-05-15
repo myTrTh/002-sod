@@ -9,6 +9,7 @@ use App\Utils\UserManager;
 use App\Utils\GuestbookManager;
 use App\Utils\RoleManager;
 use App\Utils\PermissionManager;
+use App\Utils\TextMode;
 use App\Utils\AdminManager;
 use App\Utils\ContentManager;
 use App\Utils\AuthManager;
@@ -63,7 +64,10 @@ class ServiceProvider
 		};
 		$this->container['adminManager'] = function ($c) {
 			return new AdminManager($c);
-		};		
+		};
+		$this->container['textMode'] = function() {
+			return new TextMode();
+		};
 		$this->container['roleManager'] = function ($c) {
 			return new RoleManager($c);
 		};

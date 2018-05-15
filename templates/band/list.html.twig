@@ -20,7 +20,7 @@
 				</div>
 			{% endif %}
 			<div class="content-article">
-				{{ content.article|nl2br }}
+				{{ textMode(content.article)|raw|nl2br }}
 			</div>
 			<div class="content-info">
 				{% if isPermission('content-control-all') or (isPermission('content-control-own') and content.user_id == app.user.id) %}

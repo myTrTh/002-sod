@@ -24,19 +24,19 @@
 <div class='pagenavigation'>
 	{% if pages > 1 %}
 		{% if page > 3 and finish > 5 %}
-			<span><a href="{{ path(page_name, {'page': 1}) }}"><<</a></span>
-			<span><a href="{{ path(page_name, {'page': prevpage}) }}"><</a></span>
+			<span><a href="{{ path(page_name, {'type': type, 'page': 1}) }}"><<</a></span>
+			<span><a href="{{ path(page_name, {'type': type, 'page': prevpage}) }}"><</a></span>
 		{% endif %}	
 		{% for i in start..finish %}
 			{% if i == page %}
 				<span class='active'>{{ i }}</span>
 			{% else %}
-				<span><a href="{{ path(page_name, {'page': i}) }}">{{ i }}</a></span>
+				<span><a href="{{ path(page_name, {'type': type, 'page': i}) }}">{{ i }}</a></span>
 			{% endif %}
 		{% endfor %}
 		{% if pages > finish %}
-			<span><a href="{{ path(page_name, {'page': nextpage}) }}">></a></span>
-			<span><a href="{{ path(page_name, {'page': pages}) }}">>></a></span>
+			<span><a href="{{ path(page_name, {'type': type, 'page': nextpage}) }}">></a></span>
+			<span><a href="{{ path(page_name, {'type': type, 'page': pages}) }}">>></a></span>
 		{% endif %}
 	{% endif %}
 </div>

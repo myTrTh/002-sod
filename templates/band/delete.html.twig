@@ -18,7 +18,7 @@
 				</div>
 			{% endif %}
 			<div class="content-article">
-				{{ content.article|nl2br }}
+				{{ textMode(content.article)|raw|nl2br }}
 			</div>
 			<div class="content-info">
 			</div>

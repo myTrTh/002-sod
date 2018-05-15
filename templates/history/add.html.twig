@@ -1,23 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Добавить участника {% endblock %}
-{% block header %} Добавить участника {% endblock %}
+{% block title %} Добавить историю {% endblock %}
+{% block header %} Добавить историю {% endblock %}
 {% block body %}
 
-	<a href="{{ path('content_list', {'type': type}) }}">Назад к группе</a>
+	<a href="{{ path('content_list', {'type': type}) }}">Назад к истории</a>
 	<br><br>
 	{% if error %}
 		<div class="message-error">{{ error }}</div><br>
 	{% endif %}
 
 	<form method='post' enctype='multipart/form-data' action='{{ path('content_add', {'type': type}) }}'>
-		<label>Имя<br><input type='text' name='title' value='{{ lastTitle }}'></label>
+		<label>Заголовок<br><input type='text' name='title' value='{{ lastTitle }}'></label>
 		<label>Описание<br>
 		{% include 'bbcode.html.twig' %}
 		<textarea name='article'>{{ lastArticle }}</textarea></label>
 		<input type="file" name="userfile"><br>
 		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
-		<input type='submit' name='submit_content_add' value='Добавить участника'>
+		<input type='submit' name='submit_content_add' value='Добавить историю'>
 	</form>
 
 {% endblock %}

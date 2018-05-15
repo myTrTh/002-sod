@@ -15,6 +15,7 @@ class ContentManager extends Manager
 		// prepare data
 		$title = trim($request->get('title'));
 		$article = trim($request->get('article'));		
+		$description = trim($request->get('description')) ?? '';
 
 		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
 			return $error;
@@ -46,6 +47,7 @@ class ContentManager extends Manager
 		$content->type = $type;
 		$content->title = $title;
 		$content->article = $article;
+		$content->description = $description;
 		$content->user_id = $user->id;
 		$content->save();
 
@@ -58,7 +60,7 @@ class ContentManager extends Manager
 		$id = (int) $id;
 		$title = trim($request->get('title'));
 		$article = trim($request->get('article'));
-
+		$description = trim($request->get('description')) ?? '';
 
 		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
 			return $error;
@@ -93,6 +95,7 @@ class ContentManager extends Manager
 
 		$content->title = $title;
 		$content->article = $article;
+		$content->description = $description;
 		$content->save();
 
 		return;

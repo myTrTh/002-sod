@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Редактировать альбом {% endblock %}
+{% block header %} Редактировать альбом {% endblock %}
+{% block body %}
+
+	<a href="{{ path('content_list', {'type': type}) }}">Назад к альбомам</a>
+	<br><br>
+	{% if error %}
+		<div class="message-error">{{ error }}</div><br>
+	{% endif %}
+
+	<form method='post' enctype='multipart/form-data' action='{{ path('content_edit', {'type': type, 'id': content.id }) }}'>
+		<label>Название<br><input type='text' name='title' value='{{ content.title }}'></label>
+		<label>Год выпуска<br><input type='text' name='description' value='{{ content.description }}'></label>
+		<label>Описание<br>
+		{% include 'bbcode.html.twig' %}
+		<textarea name='article'>{{ content.article }}</textarea></label>
+		<input type="file" name="userfile"><br>
+		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+		<input type='submit' name='submit_content_edit' value='Редактировать альбом'>
+	</form>
+	{% if content.image %}
+		<br>
+		<form method="post" action="{{ path('content_edit', {'type': type, 'id': content.id }) }}">
+			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+			<input type="submit" name="submit_delete_image" value="x">
+		</form>
+		<div class="content-image" >
+			<img src="../../public/images/content/{{ type }}/{{ content.image }}">
+		</div>			
+	{% endif %}	
+
+{% endblock %}

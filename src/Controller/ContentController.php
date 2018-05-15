@@ -14,8 +14,8 @@ class ContentController extends Controller
 
 		$limit = 10;
 		$offset = ($page - 1) * $limit;
-		$contents = Content::where('type', $type)->orderBy('id', 'desc')->offset($offset)->limit($limit)->get();
-		$count = Content::orderBy('id', 'desc')->count();
+		$contents = $this->getContentData($type, $offset, $limit);
+		$count = Content::where('type', $type)->orderBy('id', 'desc')->count();
 
 		return $this->render($type.'/list.html.twig', [
 			'type' => $type,
@@ -45,7 +45,7 @@ class ContentController extends Controller
 			$error = $this->container['contentManager']->add($type, $request);
 
 			if ($error === null)
-				return $this->redirectToRoute('content_list');
+				return $this->redirectToRoute('content_list', ['type' => $type]);
 		}
 
 		return $this->render($type.'/add.html.twig', [
@@ -79,7 +79,7 @@ class ContentController extends Controller
 			$error = $this->container['contentManager']->edit($type, $id, $request);
 
 			if ($error === null)
-				return $this->redirectToRoute('content_edit', ['id' => $id]);
+				return $this->redirectToRoute('content_edit', ['type' => $type, 'id' => $id]);
 		}
 
 		if ($request->get('submit_delete_image')) {
@@ -87,7 +87,7 @@ class ContentController extends Controller
 			$error = $this->container['contentManager']->deleteImage($type, $id, $request);
 
 			if ($error === null)
-				return $this->redirectToRoute('content_edit', ['id' => $id]);
+				return $this->redirectToRoute('content_edit', ['type' => $type, 'id' => $id]);
 		}				
 
 		return $this->render($type.'/edit.html.twig', [
@@ -119,7 +119,7 @@ class ContentController extends Controller
 			$error = $this->container['contentManager']->delete($type, $id, $request);
 
 			if ($error === null)
-				return $this->redirectToRoute('content_list');
+				return $this->redirectToRoute('content_list', ['type' => $type, 'id' => $id]);
 		}
 
 		return $this->render($type.'/delete.html.twig', [
@@ -127,5 +127,17 @@ class ContentController extends Controller
 			'error' => $error,
 			'content' => $content
 		]);
-	}	
+	}
+
+	private function getContentData(string $type, int $offset, int $limit)
+	{
+		$this->container['db'];
+
+		if ($type == 'news')
+			return Content::where('type', $type)->orderBy('id', 'desc')->offset($offset)->limit($limit)->get();
+		else if ($type == 'band' || $type == 'history')
+			return Content::where('type', $type)->get();
+		else if ($type == 'albums')
+			return Content::where('type', $type)->orderBy('description', 'desc')->get();			
+	}
 }

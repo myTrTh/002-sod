@@ -31,6 +31,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
             new TwigFunction('isPermission', array($this, 'isPermission')),
             new TwigFunction('isUserPermission', array($this, 'isUserPermission')),
             new TwigFunction('hierarchyAccess', array($this, 'hierarchyAccess')),
+            new TwigFunction('textMode', array($this, 'textMode')),
         ];
     }
 
@@ -71,5 +72,10 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
    public function hierarchyAccess($id)
     {
         return $this->userManager->hierarchyAccess($id);
-    }    
+    }
+
+    public function textMode($message)
+    {
+        return $this->container['textMode']->textMode($message);
+    }
 }
