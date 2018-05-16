@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Удалить материал {% endblock %}
+{% block header %} Удалить материал {% endblock %}
+{% block body %}
+
+	<a href="{{ path('content_list', {'type': type}) }}">Назад к материалам</a>
+	<br><br>
+	{% if error %}
+		<div class="message-error">{{ error }}</div>
+	{% endif %}
+
+		<div class="content content-stuff">
+			<h3>{{ content.title }}</h3>
+			<div class="stuff-type">{{ content.description }}</div>
+			{% if content.image %}
+				<div class="content-image">
+					<a href="../../public/images/content/{{ type }}/{{ content.image }}" class="imagelightbox">
+						<img src="../../public/images/content/{{ type }}/{{ content.image }}">
+					</a>
+				</div>
+			{% endif %}
+			<div class="content-article">
+				{{ textMode(content.article)|raw|nl2br }}
+			</div>
+			<div class="content-info">
+			</div>
+		</div>
+	<form method='post' action='{{ path('content_delete', {'type': type, 'id': content.id }) }}'>
+		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+		<input type='submit' name='submit_content_delete' value='Удалить материал'>
+	</form>
+
+{% endblock %}

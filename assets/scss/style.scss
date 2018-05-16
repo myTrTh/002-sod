@@ -25,6 +25,7 @@ $color_black2: #222;
 $color_black3: #333;
 $color_black3: #444;
 $color_black5: #555;
+$color_black7: #777;
 $color_white: #fff;
 $color_grey: #999;
 $color_grey1: #F5F5F5;
@@ -195,7 +196,7 @@ label {
 	max-width: 100% !important;
 }
 
-input, textarea {
+input, textarea, option {
 	height: 2em;
 	border-radius: 4px;
 	border: solid 1px $color_grey2;
@@ -203,6 +204,10 @@ input, textarea {
 	margin-right: 5px;
 	width: 100%;
 	box-sizing: border-box;
+}
+
+select {
+	min-width: 200px;
 }
 
 textarea {
@@ -344,6 +349,19 @@ input[type='submit']:hover {
 	margin-bottom: 5px;
 	.content-article {
 		font-size: .8em;
+	}
+}
+
+// stuff
+.content-stuff {
+	.stuff-type	{
+		background-color: $color_black7;
+		width: 100px;
+		border-radius: 0 5px 5px 0;
+		padding: 3px 5px;
+		color: $color_white;
+		font-size: .8em;
+		margin-bottom: 3px;
 	}
 }
 

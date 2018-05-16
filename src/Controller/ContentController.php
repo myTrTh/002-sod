@@ -133,7 +133,7 @@ class ContentController extends Controller
 	{
 		$this->container['db'];
 
-		if ($type == 'news')
+		if ($type == 'news' || $type == 'stuff')
 			return Content::where('type', $type)->orderBy('id', 'desc')->offset($offset)->limit($limit)->get();
 		else if ($type == 'links')
 			return Content::where('type', $type)->orderBy('id', 'asc')->offset($offset)->limit($limit)->get();
