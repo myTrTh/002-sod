@@ -17,10 +17,15 @@
 	{% endif %}<br>
 
 	{% for message in guestbook %}
-		{{ message.message }}<br>
-		Author: {{ message.author.username }}<br>
-		Date: {{ message.created_at|date('H:i d.m.Y') }}
-		<br><br>
+		<div class="guestbook">
+			<div class="guestbook-head">
+				{{ message.author.username }}
+				<div class="guestbook-head-date">{{ message.created_at|date('H:i d.m.Y') }}</div>
+			</div>
+			<div class="guestbook-content">
+				{{ message.message }}
+			</div>
+		</div>
 	{% endfor %}
 
 	<br><br>

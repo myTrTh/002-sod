@@ -401,3 +401,17 @@ input[type='submit']:hover {
     -ms-touch-action: none;
     touch-action: none;
 }
+
+// guestbook
+.guestbook {
+	border: solid 1px $color_grey;
+	.guestbook-head {
+		background-color: $color_grey;
+		div {
+			display: inline-block;
+		}
+		.guestbook-head-date {
+			text-align: right;
+		}
+	}
+}
