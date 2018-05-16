@@ -52,6 +52,32 @@ $(function(){
 	});
 });
 
+// quote
+$(function(){
+	$('.quote').on('click', function(){
+		var quoteid = $(this).attr('id');
+		var id = quoteid.substr(5);
+		var user = $(this).parent().parent().parent().children().children().html().trim();
+		var date = $(this).prev().html().trim();
+		var message = $('#message' + id).text().trim();
+		var quote_text = '[quote author=' + user + ' date=' + date +' post=' + id + ']\n' + message + '\n[/quote]\n\n';
+		var textarea = $('textarea');
+		var start = textarea[0].selectionStart;
+		var end = textarea[0].selectionEnd;
+		var alltext = textarea.val();
+		var start_text = alltext.substr(0, start);
+		var cursor_position = textarea.val().length;
+		var end_text = alltext.substr(end, cursor_position);
+		textarea.val(start_text + quote_text + end_text);
+		textarea.focus();
+		textarea[0].setSelectionRange(start+quote_text.length, start+quote_text.length);
+
+		// $("html, body").animate({ scrollTop: 320 }, 500);
+
+		return false;
+	});
+})
+
 // for image light box gallery
 // $( 'a' ).imageLightbox(
 //     selector:       'class="imagelightbox"',   // string;

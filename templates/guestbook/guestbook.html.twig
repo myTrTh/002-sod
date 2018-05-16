@@ -17,13 +17,27 @@
 	{% endif %}<br>
 
 	{% for message in guestbook %}
-		<div class="guestbook">
+		<div class="guestbook" id="post{{ message.id }}">
 			<div class="guestbook-head">
-				{{ message.author.username }}
-				<div class="guestbook-head-date">{{ message.created_at|date('H:i d.m.Y') }}</div>
+				<div class="guestbook-head-user">{{ message.author.username }}</div>
+				{% if message.author.image %}
+					<div class="content-image">
+						<a href="../../public/images/users/{{ message.author.image }}" class="imagelightbox">
+							<img src="../../public/images/users/{{ message.author.image }}">
+						</a>
+					</div>
+				{% else %}
+					<i class="profile-image fa fa-user" aria-hidden="true"></i><br>
+				{% endif %}
 			</div>
 			<div class="guestbook-content">
-				{{ message.message }}
+				<div class="guestbook-content-head">
+					<span class="guestbook-content-date">{{ message.created_at|date('H:i d.m.Y') }}</span>
+					<span class="guestbook-content-quote quote" id="quote{{ message.id }}">Цитата</span>
+				</div>
+				<div class="guestbook-content-post" id="message{{ message.id }}">
+					{{ textMode(message.message)|raw|nl2br }}
+				</div>
 			</div>
 		</div>
 	{% endfor %}

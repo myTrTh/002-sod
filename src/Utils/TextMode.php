@@ -50,51 +50,52 @@ class TextMode
 		// }
 		// 	// $message = preg_replace($patternB, "<div class='spoiler'><span class='sign'>+</span><span class='spoiler-name'> спойлер</span><div class='spoiler-body'>$1</div></div>", $message);
 	
-		// $pattern_quote = "/(\[quote)(?:\ ?author=([a-zA-Z0-9а-яёА-ЯЁ\_\@]+))?(?:\ ?date=([a-zA-Zа-яёА-ЯЁ0-9\ \.\,\:]+))?(?:\ ?post=([0-9]+))?\]([\s\S]+)?(\[\/quote\])/siuU";
-		// $how_quote = substr_count($message, "[quote");
-		// for($i=0;$i<$how_quote;$i++) {
-		// 	$message = preg_replace_callback($pattern_quote, function($matches) {
-		// 		# 1 open quote 2 author 3 date 4 post id 5 message 6 close quote
+		$pattern_quote = "/(\[quote)(?:\ ?author=([a-zA-Z0-9а-яёА-ЯЁ\_\@]+))?(?:\ ?date=([a-zA-Zа-яёА-ЯЁ0-9\ \.\,\:]+))?(?:\ ?post=([0-9]+))?\]([\s\S]+)?(\[\/quote\])/siuU";
+		$how_quote = substr_count($message, "[quote");
+		for($i=0;$i<$how_quote;$i++) {
+			$message = preg_replace_callback($pattern_quote, function($matches) {
+				# 1 open quote 2 author 3 date 4 post id 5 message 6 close quote
 
-		// 		$start_quote = $matches[1];
-		// 		$content_quote = trim($matches[5]);
-		// 		$end_quote = $matches[6];
+				$start_quote = $matches[1];
+				$content_quote = trim($matches[5]);
+				$end_quote = $matches[6];
 
-		// 		if(!$matches[2] and !$matches[3]) {
-		// 			$result = "<div class='bookquote'>".$content_quote."</div>";
-		// 		} else {
+				if(!$matches[2] and !$matches[3]) {
+					$result = "<div class='bookquote'>".$content_quote."</div>";
+				} else {
 
-		// 			if($matches[2])
-		// 				$author = $matches[2];
-		// 			else
-		// 				$author = "";
+					if($matches[2])
+						$author = $matches[2];
+					else
+						$author = "";
 
-		// 			if($matches[3]) {
+					if($matches[3]) {
 
-		// 				$date = $this->mode_date->replace_date($matches[3]);
+						// $date = $this->mode_date->replace_date($matches[3]);
+						$date = $matches[3];
 
-		// 				if($matches[2])
-		// 					$date = ", ".$date;
-		// 			} else {
-		// 				$date = "";
-		// 			}
+						if($matches[2])
+							$date = ", ".$date;
+					} else {
+						$date = "";
+					}
 
-		// 			if($matches[4]) {
-		// 				$post = $matches[4];
-		// 				$post = "<a class='nostyle' href='/post/".$post."'>".$author.$date."</a>";
-		// 			} else {
-		// 				$post = $author.$date;
-		// 			}
+					if($matches[4]) {
+						$post = $matches[4];
+						$post = "<a class='nostyle' href='/post/".$post."'>".$author.$date."</a>";
+					} else {
+						$post = $author.$date;
+					}
 
-		// 			$result = "<div class='quote-author'>".$post."</div>
-		// 					   <div class='bookquote'>".$content_quote."</div>";
+					$result = "<div class='quote-author'>".$post."</div>
+							   <div class='bookquote'>".$content_quote."</div>";
 
-		// 		}
+				}
 
 
-		// 		return $result;
-		// 	}, $message);
-		// }
+				return $result;
+			}, $message);
+		}
 
 		// links //
 		$pattern = "/(\[(?:url=|img]))?(https?\:\/\/)?([\.a-zA-Z0-9\-]+\.[a-zA-Z]{2,6}(?:\/(?:[^\s\]\[\'\"\<\>]+)?)?)(?:\])?(?:(.*)(\[\/(?:url|img)\]))?/ui";
