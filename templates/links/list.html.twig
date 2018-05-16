@@ -1,26 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Группа {% endblock %}
-{% block header %} Группа {% endblock %}
+{% block title %} Ссылки {% endblock %}
+{% block header %} Ссылки {% endblock %}
 {% block body %}
 
 	{% if isPermission('content-control-all') or isPermission('content-control-own') %}
 		<a href="{{ path('content_add', {'type': type}) }}">
-			<i class="fa fa-plus-square" aria-hidden="true"></i> Добавить участника
+			<i class="fa fa-plus-square" aria-hidden="true"></i> Добавить ссылку
 		</a>
 		<br><br>
 	{% endif %}
 
 	{% for content in contents %}
-		<div class="content content-band">
-			<h3>{{ content.title }}</h3>
-			{% if content.image %}
-				<div class="content-image">
-					<img src="../../public/images/content/{{ type }}/{{ content.image }}">
-				</div>
-			{% endif %}
+		<div class="content content-link">
+			<a class="a-link" href="{{ content.article }}">{{ textMode(content.article)|raw|nl2br }}</a>
 			<div class="content-article">
-				{{ textMode(content.article)|raw|nl2br }}
+				{{ content.title }}
 			</div>
 			<div class="content-info">
 				{% if isPermission('content-control-all') or (isPermission('content-control-own') and content.user_id == app.user.id) %}

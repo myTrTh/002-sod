@@ -135,6 +135,8 @@ class ContentController extends Controller
 
 		if ($type == 'news')
 			return Content::where('type', $type)->orderBy('id', 'desc')->offset($offset)->limit($limit)->get();
+		else if ($type == 'links')
+			return Content::where('type', $type)->orderBy('id', 'asc')->offset($offset)->limit($limit)->get();
 		else if ($type == 'band' || $type == 'history')
 			return Content::where('type', $type)->get();
 		else if ($type == 'albums')

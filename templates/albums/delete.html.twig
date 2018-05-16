@@ -10,18 +10,28 @@
 		<div class="message-error">{{ error }}</div>
 	{% endif %}
 
-		<div class="content">
+		<div class="content content-albums">
 			<h3>{{ content.title }}</h3>
-			{% if content.image %}
-				<div class="content-image">
-					<img src="../../public/images/content/{{ type }}/{{ content.image }}">
-				</div>
-			{% endif %}
-			<div class="content-article">
-				{{ textMode(content.article)|raw|nl2br }}
-			</div>
-			<div class="content-info">
-			</div>
+			<table>
+				<tr>
+					<td>
+					{% if content.image %}
+						<div class="content-image">
+							<img src="../../public/images/content/{{ type }}/{{ content.image }}">
+						</div>
+					{% else %}
+						<div class="content-image">
+							<img src="../../public/images/interface/no-image-album.jpg">
+						</div>						
+					{% endif %}
+					</td>
+					<td>
+					<div class="content-article">
+						{{ textMode(content.article)|raw|nl2br }}
+					</div>
+					</td>
+				</tr>
+			</table>
 		</div>
 	<form method='post' action='{{ path('content_delete', {'type': type, 'id': content.id }) }}'>
 		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>

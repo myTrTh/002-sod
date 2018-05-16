@@ -1,5 +1,6 @@
 // import
 @import '_flatpickr.min.css';
+@import '_imagelightbox.css';
 @import '_font-awesome.scss';
 
 // fonts
@@ -66,7 +67,6 @@ html, body {
 	display: flex;
 	max-width: $site_width;
 	flex-direction: column;
-	background: #cbc;
 }
 
 header {
@@ -162,8 +162,8 @@ section {
 	}
 	aside {
 		flex: 1 1 250px;
-		background: #eeb;
 		display: flex;
+		background: $color_grey1;		
 		height: auto;
 		flex-wrap: wrap;
 		align-content: flex-start;
@@ -280,10 +280,9 @@ input[type='submit']:hover {
 
 // news 
 .content {
-	background-color: #DCDCDC;
 	border-radius: 0 5px;
 	padding: 1px 3px 3px 5px;
-	margin-bottom: 5px;
+	margin-bottom: 25px;
 }
 
 .content-image {
@@ -336,6 +335,18 @@ input[type='submit']:hover {
 	}
 }
 
+// links 
+.link-out {
+	text-transform: uppercase;
+}
+
+.content-link {
+	margin-bottom: 5px;
+	.content-article {
+		font-size: .8em;
+	}
+}
+
 // pagenavigation
 .pagenavigation {
 	span {
@@ -361,4 +372,14 @@ input[type='submit']:hover {
 
 .bbunderline {
 	text-decoration: underline;
+}
+
+// image light box
+.imagelightbox
+{
+    position: relative;
+    z-index: 9999;
+ 
+    -ms-touch-action: none;
+    touch-action: none;
 }

@@ -11,7 +11,9 @@
 	{% endif %}<br>
 	<form method='post' enctype='multipart/form-data' action='{{ path('content_add', {'type': type}) }}'>
 		<label>Заголовок<br><input type='text' name='title' value='{{ lastTitle }}'></label>
-		<label>Контент<br><textarea name='article'>{{ lastArticle }}</textarea></label>
+		<label>Контент<br>
+		{% include 'bbcode.html.twig' %}
+			<textarea name='article'>{{ lastArticle }}</textarea></label>
 		<input type="file" name="userfile"><br>
 		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
 		<input type='submit' name='submit_content_add' value='Добавить новость'>

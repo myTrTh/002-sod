@@ -12,7 +12,7 @@
 	{% endif %}
 
 	{% for content in contents %}
-		<div class="content-albums">
+		<div class="content content-albums">
 			<h3>{{ content.title }}</h3>
 			<table>
 				<tr>
@@ -21,6 +21,10 @@
 						<div class="content-image">
 							<img src="../../public/images/content/{{ type }}/{{ content.image }}">
 						</div>
+					{% else %}
+						<div class="content-image">
+							<img src="../../public/images/interface/no-image-album.jpg">
+						</div>						
 					{% endif %}
 					</td>
 					<td>

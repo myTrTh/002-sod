@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Удалить участника {% endblock %}
-{% block header %} Удалить участника {% endblock %}
+{% block title %} Удалить ссылку {% endblock %}
+{% block header %} Удалить ссылку {% endblock %}
 {% block body %}
 
-	<a href="{{ path('content_list', {'type': type}) }}">Назад к группе</a>
+	<a href="{{ path('content_list', {'type': type}) }}">Назад к ссылкам</a>
 	<br><br>
 	{% if error %}
 		<div class="message-error">{{ error }}</div>
 	{% endif %}
 
-		<div class="content content-band">
+		<div class="content">
 			<h3>{{ content.title }}</h3>
 			{% if content.image %}
 				<div class="content-image">
@@ -21,12 +21,12 @@
 				{{ textMode(content.article)|raw|nl2br }}
 			</div>
 			<div class="content-info">
-
+				- <a href="#">{{ content.author.username }}</a>, {{ content.created_at|date('d.m.Y') }}
 			</div>
 		</div>
 	<form method='post' action='{{ path('content_delete', {'type': type, 'id': content.id }) }}'>
 		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
-		<input type='submit' name='submit_content_delete' value='Удалить участника'>
+		<input type='submit' name='submit_content_delete' value='Удалить ссылку'>
 	</form>
 
 {% endblock %}
