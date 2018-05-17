@@ -22,5 +22,10 @@ class User extends Eloquent
 	public function permissions()
 	{
 		return $this->belongsToMany('App\Model\Permission');
-	}	
+	}
+
+	public function messages()
+	{
+		return $this->hasMany('App\Model\Guestbook', 'user_id', 'id');
+	}
 }

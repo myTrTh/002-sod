@@ -20,20 +20,25 @@
 		<div class="guestbook" id="post{{ message.id }}">
 			<div class="guestbook-head">
 				<div class="guestbook-head-user">{{ message.author.username }}</div>
+				<div class="guestbook-image">
 				{% if message.author.image %}
-					<div class="content-image">
 						<a href="../../public/images/users/{{ message.author.image }}" class="imagelightbox">
 							<img src="../../public/images/users/{{ message.author.image }}">
 						</a>
-					</div>
 				{% else %}
-					<i class="profile-image fa fa-user" aria-hidden="true"></i><br>
+						<i class="guestbook-default-image fa fa-user" aria-hidden="true"></i><br>
 				{% endif %}
+				</div>
+				<div class="guestbook-post-count">Сообщений: {{ message_count[message.author.id] }}</div>
 			</div>
 			<div class="guestbook-content">
 				<div class="guestbook-content-head">
 					<span class="guestbook-content-date">{{ message.created_at|date('H:i d.m.Y') }}</span>
-					<span class="guestbook-content-quote quote" id="quote{{ message.id }}">Цитата</span>
+					<span class="guestbook-content-quote quote" id="quote{{ message.id }}">
+					{% if isPermission('guestbook-write') %}
+						Цитата
+					{% endif %}
+					</span>
 				</div>
 				<div class="guestbook-content-post" id="message{{ message.id }}">
 					{{ textMode(message.message)|raw|nl2br }}
