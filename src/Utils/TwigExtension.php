@@ -7,6 +7,7 @@ use Twig\Extension\GlobalsInterface;
 use Twig\TwigFunction;
 use App\Utils\TokenManager;
 use App\Utils\UserManager;
+use App\Utils\Dater;
 
 class TwigExtension extends AbstractExtension implements GlobalsInterface
 {
@@ -32,6 +33,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
             new TwigFunction('isUserPermission', array($this, 'isUserPermission')),
             new TwigFunction('hierarchyAccess', array($this, 'hierarchyAccess')),
             new TwigFunction('textMode', array($this, 'textMode')),
+            new TwigFunction('beautiful_date', array($this, 'beautiful_date')),
         ];
     }
 
@@ -77,5 +79,10 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
     public function textMode($message)
     {
         return $this->container['textMode']->textMode($message);
+    }
+
+    public function beautiful_date($date)
+    {
+        return $this->container['dater']->beautiful_date($date);
     }
 }

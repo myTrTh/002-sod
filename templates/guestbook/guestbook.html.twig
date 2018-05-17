@@ -6,6 +6,7 @@
 
 	{% if isPermission('guestbook-write') %}
 		<form method='post' enctype='multipart/form-data' action='{{ path('guestbook') }}'>
+			{% include 'bbcode.html.twig' %}
 			<textarea name='message'>{{ lastMessage }}</textarea>
 			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'><br>
 			<input type='submit' name='submit_guestbook' value='Отправить'>
@@ -33,7 +34,7 @@
 			</div>
 			<div class="guestbook-content">
 				<div class="guestbook-content-head">
-					<span class="guestbook-content-date">{{ message.created_at|date('H:i d.m.Y') }}</span>
+					<span class="guestbook-content-date">{{ beautiful_date(message.created_at) }}</span>
 					<span class="guestbook-content-quote quote" id="quote{{ message.id }}">
 					{% if isPermission('guestbook-write') %}
 						Цитата
@@ -43,6 +44,7 @@
 				<div class="guestbook-content-post" id="message{{ message.id }}">
 					{{ textMode(message.message)|raw|nl2br }}
 				</div>
+				<div class="hidden-date" id="hidden-date-{{ message.id }}">{{ message.created_at }}</div>
 			</div>
 		</div>
 	{% endfor %}

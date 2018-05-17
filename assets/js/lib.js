@@ -58,7 +58,7 @@ $(function(){
 		var quoteid = $(this).attr('id');
 		var id = quoteid.substr(5);
 		var user = $(this).parent().parent().parent().children().children().html().trim();
-		var date = $(this).prev().html().trim();
+		var date = $('#hidden-date-' + id).text().trim();
 		var message = $('#message' + id).text().trim();
 		var quote_text = '[quote author=' + user + ' date=' + date +' post=' + id + ']\n' + message + '\n[/quote]\n\n';
 		var textarea = $('textarea');
