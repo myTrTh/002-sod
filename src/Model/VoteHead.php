@@ -15,8 +15,13 @@ class VoteHead extends Eloquent
 	protected $dates = ['deleted_at'];
 	protected $table = "vote_head";
 
-	// public function author()
-	// {
-	// 	return $this->belongsTo('App\Model\User', 'user_id', 'id');
-	// }	
+	public function author()
+	{
+		return $this->belongsTo('App\Model\User', 'user_id', 'id');
+	}
+
+	public function options()
+	{
+		return $this->hasMany('App\Model\VoteOption');
+	}
 }

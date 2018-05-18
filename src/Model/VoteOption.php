@@ -15,8 +15,8 @@ class VoteOption extends Eloquent
 	protected $dates = ['deleted_at'];
 	protected $table = "vote_option";
 
-	// public function author()
-	// {
-	// 	return $this->belongsTo('App\Model\User', 'user_id', 'id');
-	// }	
+	public function users()
+	{
+		return $this->hasMany('App\Model\VoteUser');
+	}
 }

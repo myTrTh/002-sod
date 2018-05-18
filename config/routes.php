@@ -55,6 +55,7 @@ $routes->add('guestbook', new Route('/guestbook/{page}', array('_controller' => 
 
 // votes routes
 $routes->add('vote_list', new Route('/votes/{page}', array('_controller' => 'App\Controller\VoteController::list', 'page' => 1), array('page' => '[0-9]+')));
+$routes->add('vote_show', new Route('/vote/{id}/{access}', array('_controller' => 'App\Controller\VoteController::show', 'id' => 1, 'access' => 'close'), array('id' => '[0-9]+', 'access' => 'open|close')));
 $routes->add('vote_add', new Route('/vote/add', array('_controller' => 'App\Controller\VoteController::add')));
 $routes->add('vote_edit', new Route('/vote/edit/{id}', array('_controller' => 'App\Controller\VoteController::edit'), array('id' => '[0-9]+')));
 $routes->add('vote_delete', new Route('/vote/delete/{id}', array('_controller' => 'App\Controller\VoteController::delete'), array('id' => '[0-9]+')));

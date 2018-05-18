@@ -13,11 +13,16 @@
 		<label>Заголовок<br><input type='text' name='title' value='{{ lastTitle }}'></label>
 		<label>Варианты ответа<br>
 		<div class="vote-options">
-			{% if lastVoteOption %}
-				{% for lastVoteOption in option %}
+			{% if lastVoteOptions and lastVoteOptions|length == 1 %}
+				{% for option in lastVoteOptions %}
 					<input type="text" name="vote_options[]" value="{{ option }}"><br>
 				{% endfor %}
-			{% else %}			
+				<input type="text" name="vote_options[]"><br>
+			{% elseif lastVoteOptions and lastVoteOptions|length > 1 %}
+				{% for option in lastVoteOptions %}
+					<input type="text" name="vote_options[]" value="{{ option }}"><br>
+				{% endfor %}
+			{% else %}
 				<input type="text" name="vote_options[]"><br>
 				<input type="text" name="vote_options[]"><br>
 			{% endif %}

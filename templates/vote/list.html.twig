@@ -11,27 +11,11 @@
 		<br><br>
 	{% endif %}
 
+	<div class="content">
 	{% for vote in votes %}
-		<div class="content">
-			<h3>{{ vote.title }}</h3>
-			<div class="content-article">
-				{{ textMode(vote.article)|raw|nl2br }}
-			</div>
-{# 			<div class="content-info">
-				{% if isPermission('content-control-all') or (isPermission('content-control-own') and content.user_id == app.user.id) %}
-				<span class='content-control'>
-					<a href='{{ path('content_edit', {'type': type, 'id': content.id}) }}'>
-						<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-					</a>
-					<a href='{{ path('content_delete', {'type': type, 'id': content.id}) }}'>
-						<i class="fa fa-trash-o" aria-hidden="true"></i>
-					</a>
-				</span>
-				{% endif %}
-				- <a href="#">{{ content.author.username }}</a>, {{ content.created_at|date('d.m.Y') }}
-			</div> #}
-		</div>
+			<div class="vote-title"><a href="{{ path('vote_show', {'id': vote.id }) }}">{{ vote.title }}</a></div>
 	{% endfor %}
+	</div>
 
 	<br><br>
 	{# page navigation #}

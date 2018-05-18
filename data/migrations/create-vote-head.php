@@ -14,6 +14,7 @@ Capsule::schema()->create('vote_head', function($table){
 	$table->increments('id');
 	$table->string('title');
 	$table->integer('user_id');
+	$table->integer('status');
 	$table->softDeletes();	
 	$table->timestamps();
 });

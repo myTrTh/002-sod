@@ -12,6 +12,7 @@ $container->get()['db'];
 
 Capsule::schema()->create('vote_user', function($table){
 	$table->increments('id');
+	$table->integer('vote_head_id');
 	$table->integer('vote_option_id');
 	$table->integer('user_id');
 	$table->softDeletes();

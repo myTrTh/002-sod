@@ -251,7 +251,7 @@ input[type='file'] {
 	margin-bottom: 1em;
 }
 
-input[type='checkbox'] {
+input[type='checkbox'], input[type='radio'] {
 	width: auto;
 }
 
@@ -538,4 +538,20 @@ input[type='submit']:hover, .button:hover {
 // vote 
 .vote-options input {
 	margin-bottom: 10px;
+}
+
+.vote-title {
+	margin-bottom: 10px;
+	a {
+		font-size: 1.3em;
+		text-transform: uppercase;
+	}
+}
+
+.vote-option-result {
+	margin-bottom: 10px;
+}
+
+.vote-option-users {
+	font-size: .9em;
 }

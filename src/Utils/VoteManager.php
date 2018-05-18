@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
 use App\Model\VoteHead;
 use App\Model\VoteOption;
+use App\Model\VoteUser;
 
 class VoteManager extends Manager
 {
@@ -13,28 +14,28 @@ class VoteManager extends Manager
 
 	public function add($request)
 	{
+		$this->container['db'];
 
 		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
 			return $error;
 
-		// prepare data
 		$title = trim($request->get('title'));
+
+		if ($error = $this->ifEmptyStringValidate($title, 'Заголовок'))
+			return $error;
+
 		$voteOption = $request->get('vote_options');
 		for ($i=0; $i < count($voteOption); $i++) {
 			$voteOption[$i] = trim($voteOption[$i]);
 		}
-		if ($lastVoteOption) {		
+		if ($voteOption) {
 			$voteOption = array_diff($voteOption, array(""));
 			$voteOption = array_unique($voteOption);
-		} else {
-			return "Должно быть как минимум два варианта ответа.";
 		}
 
 		if (count($voteOption) < 2)
 			return "Должно быть как минимум два варианта ответа.";		
 
-		if ($error = $this->ifEmptyStringValidate($title, 'Заголовок'))
-			return $error;
 
 		$user = $this->container['userManager']->getUser();
 		if (!is_object($user) && !($user instanceOf User))
@@ -43,12 +44,48 @@ class VoteManager extends Manager
 		$vote = new VoteHead();
 		$vote->title = $title;
 		$vote->user_id = $user->id;
+		$vote->status = 1;
 		$vote->save();
 
 		foreach ($voteOption as $option) {
 			$vote_option = new VoteOption();
 			$vote_option->title = $option;
+			$vote_option->head_id = $vote->id;
+			$vote_option->save();
 		}
+
+		return;
+	}
+
+	public function set($id, $request)
+	{
+		$this->container['db'];
+
+		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
+			return $error;
+
+		$user = $this->container['userManager']->getUser();
+		if (!is_object($user) && !($user instanceOf User))
+			return 'Вы не авторизированы.';
+
+		$vote = VoteHead::where('id', $id)->first();
+		if (!is_object($vote) && !($vote instanceOf VoteHead))
+			return 'Опрос не найден.';
+
+		$vote_user = VoteUser::where('vote_head_id', $vote->id)->where('user_id', $user->id)->first();
+		if (is_object($vote_user) && ($vote_user instanceof VoteUser))
+			return "Вы уже голосовали";
+
+		$option = $request->get('vote_options');
+
+		if (count($option) == 0)
+			return "Выберите вариант ответа";
+
+		$vote_user = new VoteUser();
+		$vote_user->vote_head_id = $vote->id;
+		$vote_user->vote_option_id = $option;
+		$vote_user->user_id = $user->id;
+		$vote_user->save();
 
 		return;
 	}
