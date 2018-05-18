@@ -13,6 +13,7 @@ use App\Utils\TextMode;
 use App\Utils\Dater;
 use App\Utils\AdminManager;
 use App\Utils\ContentManager;
+use App\Utils\VoteManager;
 use App\Utils\AuthManager;
 use App\Utils\Mailer;
 use App\Utils\Upload;
@@ -63,6 +64,9 @@ class ServiceProvider
 		$this->container['userManager'] = function ($c) {
 			return new UserManager($c);
 		};
+		$this->container['voteManager'] = function ($c) {
+			return new VoteManager($c);
+		};		
 		$this->container['adminManager'] = function ($c) {
 			return new AdminManager($c);
 		};

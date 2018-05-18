@@ -199,7 +199,7 @@ label {
 	max-width: 100% !important;
 }
 
-input, textarea, option {
+input, textarea, option, .button {
 	height: 2em;
 	border-radius: 4px;
 	border: solid 1px $color_grey2;
@@ -220,8 +220,13 @@ textarea {
 	padding: 3px 5px;
 }
 
-input:focus, textarea:focus {
+input:focus, textarea:focus, button:focus {
 	box-shadow:  0 0 5px $color_grey2;
+}
+
+.button {
+	display: inline-block;
+	font-size: .8em;
 }
 
 input.l-middle {
@@ -230,7 +235,7 @@ input.l-middle {
 	box-sizing: border-box;	
 }
 
-input[type='submit'] {
+input[type='submit'], .button {
 	padding: 5px 10px;
 	height: auto;
 	width: auto;
@@ -250,7 +255,7 @@ input[type='checkbox'] {
 	width: auto;
 }
 
-input[type='submit']:hover {
+input[type='submit']:hover, .button:hover {
 	box-shadow:  0 0 5px $color_grey2;	
 }
 
@@ -422,7 +427,8 @@ input[type='submit']:hover {
 	.guestbook-head {
 		flex: 0 0 160px;
 		font-family: $font_header;		
-		font-size: 1.1em;		
+		font-size: 1.1em;
+		text-align: center;
 		padding: 5px;
 		box-sizing: border-box;
 		@media only all and (max-width: 440px) {
@@ -527,4 +533,9 @@ input[type='submit']:hover {
 
 .hidden-date {
 	display: none;
+}
+
+// vote 
+.vote-options input {
+	margin-bottom: 10px;
 }

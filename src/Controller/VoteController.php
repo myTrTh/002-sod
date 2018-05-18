@@ -25,7 +25,7 @@ class VoteController extends Controller
 		]);
 	}
 
-	public function add($type)
+	public function add()
 	{
 		if (!$this->container['userManager']->isPermission('content-control-all') && !$this->container['userManager']->isPermission('content-control-own'))
 			return $this->render('error/page403.html.twig', array('errno' => 403));
@@ -37,21 +37,27 @@ class VoteController extends Controller
 		// default values after submit
 		$error = '';
 		$lastTitle = trim($request->get('title'));
-		$lastArticle = trim($request->get('article'));
+		$lastVoteOption = $request->get('vote_options');
+		for ($i=0; $i < count($lastVoteOption); $i++) {
+			$lastVoteOption[$i] = trim($lastVoteOption[$i]);
+		}
+		if ($lastVoteOption) {
+			$lastVoteOption = array_diff($lastVoteOption, array(""));
+			$lastVoteOption = array_unique($lastVoteOption);			
+		}
 
-		if ($request->get('submit_content_add')) {
+		if ($request->get('submit_vote_add')) {
 
-			$error = $this->container['contentManager']->add($type, $request);
+			$error = $this->container['voteManager']->add($request);
 
-			if ($error === null)
-				return $this->redirectToRoute('content_list', ['type' => $type]);
+		// 	if ($error === null)
+		// 		return $this->redirectToRoute('vote_list');
 		}
 
 		return $this->render('vote/add.html.twig', [
-			'type' => $type,
 			'error' => $error,
 			'lastTitle' => $lastTitle,
-			'lastArticle' => $lastArticle
+			'lastVoteOption' => $lastVoteOption
 		]);
 	}
 
