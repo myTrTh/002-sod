@@ -1,35 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Редактировать новость {% endblock %}
-{% block header %} Редактировать новость {% endblock %}
+{% block title %} Редактировать опрос {% endblock %}
+{% block header %} Редактировать опрос {% endblock %}
 {% block body %}
 
-	<a href="{{ path('content_list', {'type': type}) }}">Назад к новостям</a>
+	<a href="{{ path('vote_list') }}">Назад к опросам</a>
 	<br><br>
 	{% if error %}
 		<div class="message-error">{{ error }}</div><br>
 	{% endif %}
 
-	<form method='post' enctype='multipart/form-data' action='{{ path('content_edit', {'type': type, 'id': content.id }) }}'>
-		<label>Заголовок<br><input type='text' name='title' value='{{ content.title }}'></label>
-		<label>Контент<br>
-		{% include 'bbcode.html.twig' %}
-			<textarea type='text' name='article'>{{ content.article }}</textarea></label>
-		<input type="file" name="userfile"><br>
-		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
-		<input type='submit' name='submit_content_edit' value='Редактировать новость'>
-	</form>
-	{% if content.image %}
-		<br>
-		<form method="post" action="{{ path('content_edit', {'type': type, 'id': content.id }) }}">
+		<div class="content">
+			<h3>{{ vote.title }}</h3>
+			{% for option in vote.options %}
+				{{ option.title }}<br>
+			{% endfor %}
+		</div>
+	{% if vote.status == 1 %}
+		<form method='post' action='{{ path('vote_edit', {'id': vote.id }) }}'>
 			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
-			<input type="submit" name="submit_delete_image" value="x">
+			<input type='submit' name='submit_vote_edit' value='Завершить опрос'>
 		</form>
-				<div class="content-image">
-					<a href="../../public/images/content/{{ type }}/{{ content.image }}" class='swipebox'>
-						<img src="../../public/images/content/{{ type }}/{{ content.image }}">
-					</a>
-				</div>		
-	{% endif %}	
+	{% elseif vote.status == 0 %}
+		<b>Опрос завершен</b>
+	{% endif %}
 
 {% endblock %}

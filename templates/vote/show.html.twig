@@ -27,10 +27,17 @@
 			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>		
 			<input type="submit" name="submit_vote_set" value="Голосовать">
 			</form>
+			<br>
+			<a href="{{ path('vote_show', {'id': vote.id, 'access': 'open'}) }}">Просмотреть результаты</a>
 		{% else %}
 			<div class='vote-info'>
 				Автор: {{ vote.author.username }}<br>
-				Создан: {{ beautiful_date(vote.created_at) }}
+				Создан: {{ beautiful_date(vote.created_at) }}<br>
+				{% if vote.status == 1 %}
+					Статус: активно
+				{% elseif vote.status == 0 %}
+					Завершен {{ beautiful_date(vote.updated_at)|lower }}
+				{% endif %}
 			</div>
 			<div class="vote-result-bar">
 				<div class="vote-result-name">ВСЕГО</div>
@@ -39,7 +46,11 @@
 			</div>			
 			{% for option in vote.options %}
 				{# CONFIG #}
-				{% set percent = (option.users|length / count) * 100 %}
+				{% if count == 0 %}
+					{% set percent = 0 %}
+				{% else %}
+					{% set percent = (option.users|length / count) * 100 %}
+				{% endif %}
 				<div class="vote-option-result">
 					<div class="vote-option-bar">
 						<div class="vote-option-bar-name">{{ option.title }}</div>

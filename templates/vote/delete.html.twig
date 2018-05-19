@@ -1,32 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Удалить новость {% endblock %}
-{% block header %} Удалить новость {% endblock %}
+{% block title %} Удалить опрос {% endblock %}
+{% block header %} Удалить опрос {% endblock %}
 {% block body %}
 
-	<a href="{{ path('content_list', {'type': type}) }}">Назад к новостям</a>
+	<a href="{{ path('vote_list') }}">Назад к опросам</a>
 	<br><br>
 	{% if error %}
 		<div class="message-error">{{ error }}</div>
 	{% endif %}
 
 		<div class="content">
-			<h3>{{ content.title }}</h3>
-			{% if content.image %}
-				<div class="content-image">
-					<img src="../../public/images/content/{{ type }}/{{ content.image }}">
-				</div>
-			{% endif %}
-			<div class="content-article">
-				{{ textMode(content.article)|raw|nl2br }}
-			</div>
-			<div class="content-info">
-				- <a href="#">{{ content.author.username }}</a>, {{ content.created_at|date('d.m.Y') }}
-			</div>
+			<h3>{{ vote.title }}</h3>
+			{% for option in vote.options %}
+				{{ option.title }}<br>
+			{% endfor %}
 		</div>
-	<form method='post' action='{{ path('content_delete', {'type': type, 'id': content.id }) }}'>
+	<form method='post' action='{{ path('vote_delete', {'id': vote.id }) }}'>
 		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
-		<input type='submit' name='submit_content_delete' value='Удалить новость'>
+		<input type='submit' name='submit_vote_delete' value='Удалить опрос'>
 	</form>
 
 {% endblock %}

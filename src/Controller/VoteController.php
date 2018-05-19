@@ -86,6 +86,9 @@ class VoteController extends Controller
 
 		}
 
+		if ($vote->status === 0)
+			$vote_access = "open";
+
 		return $this->render('vote/show.html.twig', [
 			'vote' => $vote,
 			'access' => $vote_access,
@@ -134,16 +137,15 @@ class VoteController extends Controller
 		]);
 	}
 
-	public function edit($type, $id)
+	public function edit($id)
 	{
 		$this->container['db'];
 
-		$content = Content::where('id', $id)->first();
+		$vote = VoteHead::where('id', $id)->first();
+		if (!is_object($vote) && !($vote instanceof VoteHead))
+			return $this->render('error/page404.html.twig', array('errno' => 404));
 
-		if (!is_object($content) && !($content instanceof Content))
-			$error = 'Такого контента не существует';
-
-		if (!$this->container['userManager']->isPermission('content-control-all') && (($this->container['userManager']->isPermission('content-control-own') && $news->user_id == $this->container['userManager']->getUser()['id']) == false))
+		if (!$this->container['userManager']->isPermission('content-control-all') && (($this->container['userManager']->isPermission('content-control-own') && $vote->user_id == $this->container['userManager']->getUser()['id']) == false))
 			return $this->render('error/page403.html.twig', array('errno' => 403));
 
 		// default values after submit
@@ -152,58 +154,48 @@ class VoteController extends Controller
 
 		$request = Request::createFromGlobals();
 
-		if ($request->get('submit_content_edit')) {
+		if ($request->get('submit_vote_edit')) {
 
-			$error = $this->container['contentManager']->edit($type, $id, $request);
+			$error = $this->container['voteManager']->edit($id, $request);
 
 			if ($error === null)
-				return $this->redirectToRoute('content_edit', ['type' => $type, 'id' => $id]);
+				return $this->redirectToRoute('vote_list');
 		}
 
-		if ($request->get('submit_delete_image')) {
-
-			$error = $this->container['contentManager']->deleteImage($type, $id, $request);
-
-			if ($error === null)
-				return $this->redirectToRoute('content_edit', ['type' => $type, 'id' => $id]);
-		}				
-
 		return $this->render('vote/edit.html.twig', [
-			'type' => $type,
 			'error' => $error,
-			'content' => $content
+			'vote' => $vote
 		]);
 	}
 
-	public function delete($type, $id)
+	public function delete($id)
 	{
 		$this->container['db'];
 
 		// default values after submit
 		$error = '';
 
-		$content = Content::where('id', $id)->first();
+		$vote = VoteHead::where('id', $id)->first();
 
-		if (!is_object($content) && !($content instanceof Content))
-			$error = 'Такого контента не существует';
+		if (!is_object($vote) && !($vote instanceof VoteHead))
+			$error = 'Такого опроса не существует';
 
-		if (!$this->container['userManager']->isPermission('content-control-all') && (($this->container['userManager']->isPermission('content-control-own') && $news->user_id == $this->container['userManager']->getUser()['id']) == false))
+		if (!$this->container['userManager']->isPermission('content-control-all') && (($this->container['userManager']->isPermission('content-control-own') && $vote->user_id == $this->container['userManager']->getUser()['id']) == false))
 			return $this->render('error/page403.html.twig', array('errno' => 403));
 
 		$request = Request::createFromGlobals();
 
-		if ($request->get('submit_content_delete')) {
+		if ($request->get('submit_vote_delete')) {
 
-			$error = $this->container['contentManager']->delete($type, $id, $request);
+			$error = $this->container['voteManager']->delete($id, $request);
 
 			if ($error === null)
-				return $this->redirectToRoute('content_list', ['type' => $type, 'id' => $id]);
+				return $this->redirectToRoute('vote_list', ['id' => $id]);
 		}
 
 		return $this->render('vote/delete.html.twig', [
-			'type' => $type,
 			'error' => $error,
-			'content' => $content
+			'vote' => $vote
 		]);
 	}
 }

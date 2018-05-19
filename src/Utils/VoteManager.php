@@ -88,12 +88,21 @@ class VoteManager extends Manager
 			return "Количество возможных ответов не должно превышать: ".$vote->type;
 		}
 
-		foreach ($option as $value) {
+		if (count($option) == 1) {
 			$vote_user = new VoteUser();
 			$vote_user->vote_head_id = $vote->id;			
-			$vote_user->vote_option_id = $value;
+			$vote_user->vote_option_id = $option;
 			$vote_user->user_id = $user->id;
 			$vote_user->save();
+		} else {
+
+			foreach ($option as $value) {
+				$vote_user = new VoteUser();
+				$vote_user->vote_head_id = $vote->id;			
+				$vote_user->vote_option_id = $value;
+				$vote_user->user_id = $user->id;
+				$vote_user->save();
+			}
 		}
 
 		return;
@@ -101,52 +110,21 @@ class VoteManager extends Manager
 
 	public function edit($id, $request)
 	{
-		// prepare data
-		$id = (int) $id;
-		$title = trim($request->get('title'));
-		$article = trim($request->get('article'));
-		$description = trim($request->get('description')) ?? '';
-
 		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
 			return $error;
 
-		if ($error = $this->ifEmptyStringValidate($title, 'Заголовок'))
-			return $error;
+		$vote = VoteHead::where('id', $id)->first();
 
-		if ($error = $this->ifEmptyStringValidate($article, 'Текст'))
-			return $error;
+		if (!is_object($vote) && !($vote instanceof VoteHead))
+			return 'Такого опроса не существует';
 
-
-		$content = Content::where('id', $id)->first();
-
-		if (!is_object($content) && !($content instanceof Content))
-			return 'Такого контента не существует';
-
-		$uploadedFile = $request->files->get('userfile');
-
-		if ($uploadedFile) {
-			$upload = $this->container['upload'];
-			$file = $upload->upload($uploadedFile, $this->dir.'/'.$type, 150000);
-			if ($file[0]) {
-				$oldimage = $content->image;
-				if ($oldimage)
-					$upload->delete($oldimage, $this->dir.'/'.$type);
-
-				$content->image = $file[1];
-			} else {
-				return $file[1];
-			}
-		}
-
-		$content->title = $title;
-		$content->article = $article;
-		$content->description = $description;
-		$content->save();
+		$vote->status = 0;
+		$vote->save();
 
 		return;
 	}
 
-	public function delete($type, $id, $request)
+	public function delete($id, $request)
 	{
 		// prepare data
 		$id = (int) $id;
@@ -154,39 +132,13 @@ class VoteManager extends Manager
 		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
 			return $error;
 
-		$content = Content::where('id', $id)->first();
+		$vote = VoteHead::where('id', $id)->first();
 
-		if (!is_object($content) && !($content instanceof Content))
-			return 'Такого контента не существует';
+		if (!is_object($vote) && !($vote instanceof VoteHead))
+			return 'Такого опроса не существует';
 
-		$content->delete();
+		$vote->delete();
 
 		return;
 	}
-
-	public function deleteImage($type, $id, $request)
-	{
-		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
-			return $error;
-
-		$upload = $this->container['upload'];
-
-		$uploadedFile = $request->files->get('userfile');
-
-		$content = Content::where('id', $id)->first();
-
-		if (!is_object($content) && !($content instanceof Content))
-			return 'Такого контента нет';
-		
-		$image = $content->image;
-		if ($image)
-			$upload->delete($image, $this->dir.'/'.$type);
-		else
-			return 'Изображение не установлено';
-
-		$content->image = null;
-		$content->save();
-
-		return;
-	}		
 }

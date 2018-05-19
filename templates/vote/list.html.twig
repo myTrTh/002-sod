@@ -13,7 +13,19 @@
 
 	<div class="content">
 	{% for vote in votes %}
-			<div class="vote-title"><a href="{{ path('vote_show', {'id': vote.id }) }}">{{ vote.title }}</a></div>
+			<div class="vote-title">
+				<a href="{{ path('vote_show', {'id': vote.id }) }}">{{ vote.title }}</a>
+				{% if isPermission('content-control-all') or (isPermission('content-control-own') and vote.user_id == app.user.id) %}
+					<span class='control-panel-ed'>
+					<a href='{{ path('vote_edit', {'id': vote.id}) }}'>
+						<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+					</a>
+					<a href='{{ path('vote_delete', {'id': vote.id}) }}'>
+						<i class="fa fa-trash-o" aria-hidden="true"></i>
+					</a>
+					</span>
+				{% endif %}				
+			</div>
 	{% endfor %}
 	</div>
 
