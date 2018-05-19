@@ -20,6 +20,9 @@ class VoteManager extends Manager
 			return $error;
 
 		$title = trim($request->get('title'));
+		$type = trim($request->get('type'));
+		if (empty($type))
+			$type = 1;
 
 		if ($error = $this->ifEmptyStringValidate($title, 'Заголовок'))
 			return $error;
@@ -45,12 +48,13 @@ class VoteManager extends Manager
 		$vote->title = $title;
 		$vote->user_id = $user->id;
 		$vote->status = 1;
+		$vote->type = $type;
 		$vote->save();
 
 		foreach ($voteOption as $option) {
 			$vote_option = new VoteOption();
 			$vote_option->title = $option;
-			$vote_option->head_id = $vote->id;
+			$vote_option->vote_head_id = $vote->id;
 			$vote_option->save();
 		}
 
@@ -78,14 +82,19 @@ class VoteManager extends Manager
 
 		$option = $request->get('vote_options');
 
-		if (count($option) == 0)
+		if (count($option) == 0) {
 			return "Выберите вариант ответа";
+		} else if ($vote->type != 0 && (count($option) > $vote->type)) {
+			return "Количество возможных ответов не должно превышать: ".$vote->type;
+		}
 
-		$vote_user = new VoteUser();
-		$vote_user->vote_head_id = $vote->id;
-		$vote_user->vote_option_id = $option;
-		$vote_user->user_id = $user->id;
-		$vote_user->save();
+		foreach ($option as $value) {
+			$vote_user = new VoteUser();
+			$vote_user->vote_head_id = $vote->id;			
+			$vote_user->vote_option_id = $value;
+			$vote_user->user_id = $user->id;
+			$vote_user->save();
+		}
 
 		return;
 	}

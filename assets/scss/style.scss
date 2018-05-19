@@ -31,6 +31,7 @@ $color_grey: #999;
 $color_grey1: #F5F5F5;
 $color_grey2: #ccc;
 $color_grey3: #6f707b;
+$color_red2: #e7827f;
 $color_red3: #CC3333;
 $color_green3: #228B22;
 $color_link: #008CBA;
@@ -194,9 +195,12 @@ label {
 	margin-bottom: .7em;
 }
 
-.input-wide {
-	width: 100%;
-	max-width: 100% !important;
+.length-extra-short {
+	width: 50px;
+}
+
+.label-helper {
+	color: $color_grey3;
 }
 
 input, textarea, option, .button {
@@ -554,4 +558,48 @@ input[type='submit']:hover, .button:hover {
 
 .vote-option-users {
 	font-size: .9em;
+}
+
+.vote-progress-bar {
+	height: 10px;
+	border-radius: 0 5px 5px 0;
+	background-color: #eceeef;
+}
+
+.progress-line {
+	height: 10px;
+	background-color: $color_red2;
+	border-radius: 0 5px 5px 0;	
+}
+
+.vote-result-bar {
+	display: flex;
+	border-bottom: solid 1px $color_grey2;
+	margin-bottom: 15px;
+}
+
+.vote-option-bar {
+	display: flex;
+	margin-bottom: 5px;
+}
+
+.vote-result-info, .vote-option-bar-info {
+	text-align: right;
+	flex: 1 0 55px;
+	font-weight: bold;
+}
+
+.vote-result-percent, .vote-option-bar-percent {
+	text-align: right;
+	flex: 0 1 55px;
+	color: $color_grey3;
+}
+
+.vote-users {
+	color: $color_black7;
+}
+
+.vote-info {
+	font-weight: bold;
+	margin-bottom: 10px;
 }

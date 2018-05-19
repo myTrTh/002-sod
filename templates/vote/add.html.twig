@@ -11,6 +11,7 @@
 	{% endif %}<br>
 	<form method='post' enctype='multipart/form-data' action='{{ path('vote_add') }}'>
 		<label>Заголовок<br><input type='text' name='title' value='{{ lastTitle }}'></label>
+		<label>Количество возможных ответов<br><input type='text' class='length-extra-short' name='type' value='{{ lastType }}'><span class='label-helper'>0 - неограниченно</span></label>
 		<label>Варианты ответа<br>
 		<div class="vote-options">
 			{% if lastVoteOptions and lastVoteOptions|length == 1 %}

@@ -16,24 +16,53 @@
 			{% for option in vote.options %}
 				<label>
 					<div class='checkbox-line'>
+					{% if vote.type == 1 %}						
 						<input type="radio" name="vote_options" value="{{ option.id }}"> {{ option.title }}
+					{% else %}
+						<input type="checkbox" name="vote_options[]" value="{{ option.id }}"> {{ option.title }}
+					{% endif %}
 					</div>
 				</label>
 			{% endfor %}
+			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>		
+			<input type="submit" name="submit_vote_set" value="Голосовать">
+			</form>
 		{% else %}
-			{% for option in vote.options %}			
-				<div class="vote-option-result">{{ option.title }} - {{ option.users|length }}
+			<div class='vote-info'>
+				Автор: {{ vote.author.username }}<br>
+				Создан: {{ beautiful_date(vote.created_at) }}
+			</div>
+			<div class="vote-result-bar">
+				<div class="vote-result-name">ВСЕГО</div>
+				<div class="vote-result-info">{{ count }}</div>
+				<div class="vote-result-percent"></div>
+			</div>			
+			{% for option in vote.options %}
+				{# CONFIG #}
+				{% set percent = (option.users|length / count) * 100 %}
+				<div class="vote-option-result">
+					<div class="vote-option-bar">
+						<div class="vote-option-bar-name">{{ option.title }}</div>
+						<div class="vote-option-bar-info">{{ option.users|length }}</div>
+						<div class="vote-option-bar-percent">
+						{% if percent == 100 %}
+							{{ percent|number_format(0, '.', ',') }}%
+						{% else %}
+							{{ percent|number_format(1, '.', ',') }}%
+						{% endif %}
+						</div>
+					</div>
+					<div class="vote-progress-bar">
+						<div class="progress-line" style="width: {{ percent }}%"></div>
+					</div>
 					<div class="vote-option-users">
 						{% for user in option.users %}
-							{{ user.author.username }}<br>
+							<span class='vote-users'>{{ user.author.username }}</span>{% if loop.last == 0 %}, {% endif %}
 						{% endfor %}
 					</div>
 				</div>
-			{% endfor %}				
+			{% endfor %}
 		{% endif %}
-		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>		
-		<input type="submit" name="submit_vote_set" value="Голосовать">
-		</form>
 	</div>
 
 {% endblock %}

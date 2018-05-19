@@ -29,6 +29,7 @@ class VoteController extends Controller
 	public function show($id, $access)
 	{
 		$this->container['db'];
+
 		$vote = VoteHead::where('id', $id)->first();
 		if (!is_object($vote) && !($vote instanceof VoteHead))
 			return $this->render('error/page404.html.twig', array('errno' => 404));			
@@ -39,18 +40,42 @@ class VoteController extends Controller
 			$vote_access = "open";
 			$user_id = 0;
 		} else {
-			$user_id = 1;
+			$user_id = $user->id;
 		}
 
-		$vote_user = VoteUser::where('vote_head_id', $vote->id)->where('user_id', $user_id)->first();
-		if (!is_object($vote_user) && !($vote_user instanceof VoteUser) && $access != 'open')
+		$access_user = VoteUser::where('vote_head_id', $vote->id)->where('user_id', $user_id)->first();
+		if (!is_object($access_user) && !($access_user instanceof VoteUser) && $access != 'open') {
 			$vote_access = "close";
-		else
+		} else {
 			$vote_access = "open";
+		}
+
+		// sort results if open
+		if ($vote_access == 'open') {
+			// $vote_users = VoteUser::where('vote_head_id', $vote->id)->orderBy('vote_option_id', 'desc')->groupBy('vote_option_id')->get();
+			// foreach ($vote_users as $value) {
+			// 	echo $value->vote_option_id.'<br>';
+			// }
+			// $sort_options = [];
+			// foreach ($vote->options as $option) {
+			// 	$count = count($option->users);
+			// 	$sort_options[$count][] = $option;
+			// }
+			// foreach ($sort_options as $sort) {
+			// 	foreach ($sort as $v) {
+			// 		print "<pre>";
+			// 		print_r($v);
+			// 		print "</pre>";
+			// 	}
+			// }
+		}
 
 		$request = Request::createFromGlobals();
 
 		$error = '';
+
+		// all user 
+		$count = VoteUser::where('vote_head_id', $vote->id)->count();
 
 		if ($request->get('submit_vote_set')) {
 
@@ -64,7 +89,8 @@ class VoteController extends Controller
 		return $this->render('vote/show.html.twig', [
 			'vote' => $vote,
 			'access' => $vote_access,
-			'error' => $error
+			'error' => $error,
+			'count' => $count
 		]);		
 	}
 
@@ -80,6 +106,9 @@ class VoteController extends Controller
 		// default values after submit
 		$error = '';
 		$lastTitle = trim($request->get('title'));
+		$lastType = trim($request->get('type'));
+		if (empty($lastType))
+			$lastType = 1;		
 		$lastVoteOptions = $request->get('vote_options');
 		for ($i=0; $i < count($lastVoteOptions); $i++) {
 			$lastVoteOptions[$i] = trim($lastVoteOptions[$i]);
@@ -100,6 +129,7 @@ class VoteController extends Controller
 		return $this->render('vote/add.html.twig', [
 			'error' => $error,
 			'lastTitle' => $lastTitle,
+			'lastType' => $lastType,
 			'lastVoteOptions' => $lastVoteOptions
 		]);
 	}
