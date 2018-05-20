@@ -11,6 +11,8 @@ class ContentController extends Controller
 {
 	public function list($type, $page)
 	{
+		$this->pageKeeper($page);
+
 		$this->container['db'];
 
 		$limit = 10;

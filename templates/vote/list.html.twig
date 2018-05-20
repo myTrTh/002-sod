@@ -14,6 +14,11 @@
 	<div class="content">
 	{% for vote in votes %}
 			<div class="vote-title">
+				{% if vote.status == 1 %}
+					<i class="fa fa-circle bg-green" aria-hidden="true"></i>
+				{% elseif vote.status == 0 %}
+					<i class="fa fa-circle" aria-hidden="true"></i>
+				{% endif %}
 				<a href="{{ path('vote_show', {'id': vote.id }) }}">{{ vote.title }}</a>
 				{% if isPermission('content-control-all') or (isPermission('content-control-own') and vote.user_id == app.user.id) %}
 					<span class='control-panel-ed'>
@@ -29,7 +34,6 @@
 	{% endfor %}
 	</div>
 
-	<br><br>
 	{# page navigation #}
 	{% set page_name = 'vote_list' %}
 	{% include 'pagenavigation.html.twig' %}

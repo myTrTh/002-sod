@@ -34,6 +34,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
             new TwigFunction('hierarchyAccess', array($this, 'hierarchyAccess')),
             new TwigFunction('textMode', array($this, 'textMode')),
             new TwigFunction('beautiful_date', array($this, 'beautiful_date')),
+            new TwigFunction('getPageNumber', array($this, 'getPageNumber')),
         ];
     }
 
@@ -84,5 +85,10 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
     public function beautiful_date($date)
     {
         return $this->container['dater']->beautiful_date($date);
+    }
+
+    public function getPageNumber()
+    {
+        return $this->container['controller']->getPageNumber();
     }
 }

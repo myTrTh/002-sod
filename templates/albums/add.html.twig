@@ -4,7 +4,8 @@
 {% block header %} Добавить альбом {% endblock %}
 {% block body %}
 
-	<a href="{{ path('content_list', {'type': type}) }}">Назад к альбомам</a>
+	{% set page = getPageNumber() %}
+	<a href="{{ path('content_list', {'type': type, 'page': page}) }}">Назад к альбомам</a>
 	<br><br>
 	{% if error %}
 		<div class="message-error">{{ error }}</div><br>

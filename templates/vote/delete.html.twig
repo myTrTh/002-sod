@@ -4,7 +4,8 @@
 {% block header %} Удалить опрос {% endblock %}
 {% block body %}
 
-	<a href="{{ path('vote_list') }}">Назад к опросам</a>
+	{% set page = getPageNumber() %}
+	<a href="{{ path('vote_list', {'page': page}) }}">Назад к опросам</a>
 	<br><br>
 	{% if error %}
 		<div class="message-error">{{ error }}</div>

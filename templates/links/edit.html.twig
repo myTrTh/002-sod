@@ -4,7 +4,8 @@
 {% block header %} Редактировать ссылку {% endblock %}
 {% block body %}
 
-	<a href="{{ path('content_list', {'type': type}) }}">Назад к ссылкам</a>
+	{% set page = getPageNumber() %}
+	<a href="{{ path('content_list', {'type': type, 'page': page}) }}">Назад к ссылкам</a>
 	<br><br>
 	{% if error %}
 		<div class="message-error">{{ error }}</div><br>

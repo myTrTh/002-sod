@@ -4,7 +4,8 @@
 {% block header %} Удалить участника {% endblock %}
 {% block body %}
 
-	<a href="{{ path('content_list', {'type': type}) }}">Назад к группе</a>
+	{% set page = getPageNumber() %}
+	<a href="{{ path('content_list', {'type': type, 'page': page}) }}">Назад к группе</a>
 	<br><br>
 	{% if error %}
 		<div class="message-error">{{ error }}</div>

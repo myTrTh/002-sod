@@ -539,13 +539,13 @@ input[type='submit']:hover, .button:hover {
 	display: none;
 }
 
-// vote 
+// vote
 .vote-options input {
 	margin-bottom: 10px;
 }
 
 .vote-title {
-	margin-bottom: 10px;
+	margin-bottom: 25px;
 	a {
 		font-size: 1.3em;
 		text-transform: uppercase;
@@ -606,4 +606,9 @@ input[type='submit']:hover, .button:hover {
 
 .control-panel-ed {
 	font-size: .8em;
+}
+
+// colors background
+.bg-green {
+	color: $color_green3;
 }

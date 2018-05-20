@@ -3,7 +3,7 @@
 namespace App\Core;
 
 use Pimple\Container;
-use App\Controller\AppController;
+use App\Core\Controller;
 use App\Utils\TokenManager;
 use App\Utils\UserManager;
 use App\Utils\GuestbookManager;
@@ -49,6 +49,9 @@ class ServiceProvider
 		$this->container['authManager'] = function ($c) {
 			return new AuthManager($c);
 		};
+		$this->container['controller'] = function ($c) {
+			return new Controller($c);
+		};		
 		$this->container['contentManager'] = function ($c) {
 			return new ContentManager($c);
 		};

@@ -11,6 +11,7 @@ class VoteController extends Controller
 {
 	public function list($page)
 	{
+		$this->pageKeeper($page);
 		$this->container['db'];
 
 		$limit = 10;

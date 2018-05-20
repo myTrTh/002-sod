@@ -4,7 +4,8 @@
 {% block header %} Удалить историю {% endblock %}
 {% block body %}
 
-	<a href="{{ path('content_list', {'type': type}) }}">Назад к истории</a>
+	{% set page = getPageNumber() %}
+	<a href="{{ path('content_list', {'type': type, 'page': page}) }}">Назад к истории</a>
 	<br><br>
 	{% if error %}
 		<div class="message-error">{{ error }}</div>
