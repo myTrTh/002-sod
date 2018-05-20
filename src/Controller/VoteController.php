@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Core\Controller;
 use App\Model\VoteHead;
+use App\Model\VoteOption;
 use App\Model\VoteUser;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -54,7 +55,18 @@ class VoteController extends Controller
 		// sort results if open
 		if ($vote_access == 'open') {
 
-			$vote = VoteHead::where('id', $id)->first();
+			// $sort_options = VoteOption::where('vote_head_id', $vote->id)
+			$sort_options = $this->container['db']->DB()->table('vote_option')
+				->where('vote_option.vote_head_id', $vote->id)
+				->leftjoin('vote_user', 'vote_user.vote_option_id', '=', 'vote_option.id')
+				->selectRaw('vote_option.id, vote_option.title, COUNT("vote_user.vote_option_id") AS cnt')
+				->groupBy('vote_option.id')
+				->orderBy('cnt', 'DESC')
+				->get();
+
+			print "<pre>";
+			print_r($sort_options);
+			print "</pre>";
 			// $sort_option = table('vote_option')->where('vote_head_id', $vote->id)->get();
 			// $vote_users = VoteUser::where('vote_head_id', $vote->id)->orderBy('vote_option_id', 'desc')->groupBy('vote_option_id')->get();
 			// foreach ($vote_users as $value) {

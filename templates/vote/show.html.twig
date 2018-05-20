@@ -66,11 +66,11 @@
 					<div class="vote-progress-bar">
 						<div class="progress-line" style="width: {{ percent }}%"></div>
 					</div>
-					<div class="vote-option-users">
+{# 					<div class="vote-option-users">
 						{% for user in option.users %}
 							<span class='vote-users'>{{ user.author.username }}</span>{% if loop.last == 0 %}, {% endif %}
 						{% endfor %}
-					</div>
+					</div> #}
 				</div>
 			{% endfor %}
 		{% endif %}

@@ -19,4 +19,9 @@ class Database
 		$this->capsule->setAsGlobal();
 		$this->capsule->bootEloquent();
 	}
+
+	public function DB()
+	{
+		return $this->capsule;
+	}
 }
