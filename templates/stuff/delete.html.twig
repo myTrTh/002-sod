@@ -5,7 +5,7 @@
 {% block body %}
 
 	{% set page = getPageNumber() %}
-	<a href="{{ path('content_list', {'type': type, 'page': page}) }}">Назад к материалам</a>
+	<a href="{{ path('content_list', {'type': type, 'page': getPageNumber()}) }}">Назад к материалам</a>
 	<br><br>
 	{% if error %}
 		<div class="message-error">{{ error }}</div>

@@ -70,6 +70,7 @@ html, body {
 	margin: 0 auto;
 	min-height: 100%;
 	display: flex;
+	box-shadow: 0 0 5px 5px rgba(221, 221, 221, 1);
 	max-width: $site_width;
 	flex-direction: column;
 }
@@ -166,7 +167,7 @@ section {
 		padding: 5px;
 	}
 	aside {
-		flex: 1 1 250px;
+		flex: 1 1 260px;
 		display: flex;
 		background: $color_grey1;		
 		height: auto;
@@ -187,6 +188,14 @@ footer {
 	justify-content: center;
 	align-items: center;
 	color: #fff;
+}
+
+// block vote
+.block {
+	border: solid 1px $color_white;
+	background-color: $color_white;
+	box-shadow: 0 0 0 1px rgba(4,47,89,.22);
+	margin: 5px;
 }
 
 // form, input

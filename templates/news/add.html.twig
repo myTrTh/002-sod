@@ -4,8 +4,7 @@
 {% block header %} Добавить новость {% endblock %}
 {% block body %}
 
-	{% set page = getPageNumber() %}
-	<a href="{{ path('content_list', {'type': type, 'page': page}) }}">Назад к новостям</a>
+	<a href="{{ path('content_list', {'type': type, 'page': getPageNumber()}) }}">Назад к новостям</a>
 	<br>
 	{% if error %}
 		<div class="message-error">{{ error }}</div>

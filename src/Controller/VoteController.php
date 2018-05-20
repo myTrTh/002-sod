@@ -53,6 +53,9 @@ class VoteController extends Controller
 
 		// sort results if open
 		if ($vote_access == 'open') {
+
+			$vote = VoteHead::where('id', $id)->first();
+			// $sort_option = table('vote_option')->where('vote_head_id', $vote->id)->get();
 			// $vote_users = VoteUser::where('vote_head_id', $vote->id)->orderBy('vote_option_id', 'desc')->groupBy('vote_option_id')->get();
 			// foreach ($vote_users as $value) {
 			// 	echo $value->vote_option_id.'<br>';
