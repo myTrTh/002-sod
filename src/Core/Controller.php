@@ -40,5 +40,5 @@ class Controller
 		$url = $generator->generate($route, $parameters);
 
 		return $this->redirectUrl($url, $status);
-    }	
+    }
 }

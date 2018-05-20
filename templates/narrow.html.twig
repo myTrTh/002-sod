@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block section %}
+	<article>
+		<h1>{% block header %}{% endblock %}</h1>
+		{% block body %}{% endblock %}
+	</article>
+	<aside>
+		<div class="block">sidebar 2</div>
+		<div class="block">sidebar 3</div>
+	</aside>
+{% endblock %}

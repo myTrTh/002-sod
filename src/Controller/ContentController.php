@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Core\Controller;
 use App\Model\Content;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ContentController extends Controller
 {
