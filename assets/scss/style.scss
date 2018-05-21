@@ -94,6 +94,17 @@ a:hover {
 	color: $color_black5;
 }
 
+a.header {
+	font-family: $font_header;
+	color: $color_grey;
+	font-weight: normal;
+	padding-left: 5px;
+}
+
+a.header:hover {
+	color: $color_black3;
+}
+
 // navigation
 
 nav {
