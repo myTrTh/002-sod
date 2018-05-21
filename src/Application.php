@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Application
 {
-
 	private $request;
 	private $matcher;
 	private $requestContext;

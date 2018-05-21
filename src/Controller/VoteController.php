@@ -7,6 +7,7 @@ use App\Model\VoteHead;
 use App\Model\VoteOption;
 use App\Model\VoteUser;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class VoteController extends Controller
 {
@@ -48,10 +49,10 @@ class VoteController extends Controller
 			} else {
 				$vote_access = "open";
 			}
-
 		}
 
 		// sort results if open
+		$sort_options = [];
 		if ($vote_access == 'open') {
 
 			$options = $vote->options;
@@ -65,7 +66,6 @@ class VoteController extends Controller
 
 			arsort($no_sort);
 
-			$sort_options = [];
 			foreach ($no_sort as $k => $v) {
 				$sort_options[] = $no_sort_options[$k];
 			}
@@ -96,7 +96,83 @@ class VoteController extends Controller
 			'access' => $vote_access,
 			'error' => $error,
 			'count' => $count
-		]);		
+		]);
+	}
+
+	public function ajax_show()
+	{
+		$this->container['db'];
+
+		$error = 0;
+
+		$vote = VoteHead::latest()->first();
+		if (!is_object($vote) && !($vote instanceof VoteHead))
+			$error = 1;
+			// return $this->render('error/page404.html.twig', array('errno' => 404));
+
+		// if no user
+		$user = $this->container['userManager']->getUser();
+		if (!is_object($user) && !($user instanceof User)) {
+			$vote_access = "open";
+		} else {
+
+			$access_user = VoteUser::where('vote_head_id', $vote->id)->where('user_id', $user->id)->first();
+			if (!is_object($access_user) && !($access_user instanceof VoteUser)) {
+				$vote_access = "close";
+			} else {
+				$vote_access = "open";
+			}
+		}
+
+		// sort results if open
+		$sort_options = [];
+		if ($vote_access == 'open') {
+
+			$options = $vote->options;
+
+			$no_sort = [];
+			$no_sort_options = [];
+			foreach ($options as $option) {
+				$no_sort[$option->id] = count($option->users);
+				$no_sort_options[$option->id] = $option;
+			}
+
+			arsort($no_sort);
+
+			foreach ($no_sort as $k => $v) {
+				$sort_options[] = $no_sort_options[$k];
+			}
+		}
+
+		$request = Request::createFromGlobals();
+
+		// $error = '';
+
+		// all user 
+		$count = VoteUser::where('vote_head_id', $vote->id)->count();
+
+		// if ($request->get('submit_vote_set')) {
+
+		// 	$error = $this->container['voteManager']->set($id, $request);
+
+		// 	if ($error === null)
+		// 		return $this->redirectToRoute('vote_show', ['id' => $id]);
+
+		// }
+
+		if ($vote->status === 0)
+			$vote_access = "open";
+
+		$response = [
+			'error' => $error,
+			'vote' => $vote,
+			'sort_options' => $sort_options,
+			'access' => $vote_access,
+			'error' => $error,
+			'count' => $count
+		];
+
+		return new Response(json_encode($response));
 	}
 
 	public function add()

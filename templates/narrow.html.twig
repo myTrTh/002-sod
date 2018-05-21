@@ -7,9 +7,12 @@
 		{% block body %}{% endblock %}
 	</article>
 	<aside>
-		<div class="block block-vote">
-		<a class='header' href="{{ path('vote_list') }}">ВСЕ ГОЛОСОВАНИЯ</a>
-		</div>
+		{# {% if request.ajax == true %} #}
+			<div class="block block-vote">
+				{% include 'vote/widget.html.twig' %}
+				<a class='header' href="{{ path('vote_list') }}">ВСЕ ГОЛОСОВАНИЯ</a>
+			</div>
+		{# {% endif %}		 #}
 		<div class="block">
 			<!-- VK Widget -->
 			<div id="vk_groups"></div>
