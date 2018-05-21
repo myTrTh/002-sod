@@ -40,50 +40,35 @@ class VoteController extends Controller
 		$user = $this->container['userManager']->getUser();
 		if (!is_object($user) && !($user instanceof User)) {
 			$vote_access = "open";
-			$user_id = 0;
 		} else {
-			$user_id = $user->id;
-		}
 
-		$access_user = VoteUser::where('vote_head_id', $vote->id)->where('user_id', $user_id)->first();
-		if (!is_object($access_user) && !($access_user instanceof VoteUser) && $access != 'open') {
-			$vote_access = "close";
-		} else {
-			$vote_access = "open";
+			$access_user = VoteUser::where('vote_head_id', $vote->id)->where('user_id', $user->id)->first();
+			if (!is_object($access_user) && !($access_user instanceof VoteUser) && $access != 'open') {
+				$vote_access = "close";
+			} else {
+				$vote_access = "open";
+			}
+
 		}
 
 		// sort results if open
 		if ($vote_access == 'open') {
 
-			// $sort_options = VoteOption::where('vote_head_id', $vote->id)
-			$sort_options = $this->container['db']->DB()->table('vote_option')
-				->where('vote_option.vote_head_id', $vote->id)
-				->leftjoin('vote_user', 'vote_user.vote_option_id', '=', 'vote_option.id')
-				->selectRaw('vote_option.id, vote_option.title, COUNT("vote_user.vote_option_id") AS cnt')
-				->groupBy('vote_option.id')
-				->orderBy('cnt', 'DESC')
-				->get();
+			$options = $vote->options;
 
-			print "<pre>";
-			print_r($sort_options);
-			print "</pre>";
-			// $sort_option = table('vote_option')->where('vote_head_id', $vote->id)->get();
-			// $vote_users = VoteUser::where('vote_head_id', $vote->id)->orderBy('vote_option_id', 'desc')->groupBy('vote_option_id')->get();
-			// foreach ($vote_users as $value) {
-			// 	echo $value->vote_option_id.'<br>';
-			// }
-			// $sort_options = [];
-			// foreach ($vote->options as $option) {
-			// 	$count = count($option->users);
-			// 	$sort_options[$count][] = $option;
-			// }
-			// foreach ($sort_options as $sort) {
-			// 	foreach ($sort as $v) {
-			// 		print "<pre>";
-			// 		print_r($v);
-			// 		print "</pre>";
-			// 	}
-			// }
+			$no_sort = [];
+			$no_sort_options = [];
+			foreach ($options as $option) {
+				$no_sort[$option->id] = count($option->users);
+				$no_sort_options[$option->id] = $option;
+			}
+
+			arsort($no_sort);
+
+			$sort_options = [];
+			foreach ($no_sort as $k => $v) {
+				$sort_options[] = $no_sort_options[$k];
+			}
 		}
 
 		$request = Request::createFromGlobals();
@@ -107,6 +92,7 @@ class VoteController extends Controller
 
 		return $this->render('vote/show.html.twig', [
 			'vote' => $vote,
+			'sort_options' => $sort_options,
 			'access' => $vote_access,
 			'error' => $error,
 			'count' => $count
