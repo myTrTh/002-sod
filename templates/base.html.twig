@@ -6,8 +6,9 @@
 	<title>{% block title %}SODOMANIA{% endblock %} :: SODOMANIA</title>
 	{% block favicon %}
 		<link rel="shortcut icon" type="image/x-icon" href="/../public/images/favicon/favicon.ico">
-	{% endblock %}	
+	{% endblock %}
 	<link rel="stylesheet" type="text/css" href="/../public/css/style.css">
+	{% block styles %}{% endblock %}
 </head>
 <body>
 	<div class="wrapper">
@@ -47,5 +48,6 @@
 	<script type="text/javascript" src="../../public/js/jquery.min.js"></script>
 	<script type="text/javascript" src="../../public/js/imagelightbox.min.js"></script>
 	<script type="text/javascript" src="../../public/js/libs.js"></script>
+	{% block scripts %}{% endblock %}
 </body>
 </html>

@@ -108,9 +108,9 @@ class VoteController extends Controller
 		$vote = VoteHead::latest()->first();
 		if (!is_object($vote) && !($vote instanceof VoteHead))
 			$error = 1;
-			// return $this->render('error/page404.html.twig', array('errno' => 404));
+		// 	// return $this->render('error/page404.html.twig', array('errno' => 404));
 
-		// if no user
+		// // if no user
 		$user = $this->container['userManager']->getUser();
 		if (!is_object($user) && !($user instanceof User)) {
 			$vote_access = "open";
@@ -124,7 +124,7 @@ class VoteController extends Controller
 			}
 		}
 
-		// sort results if open
+		// // sort results if open
 		$sort_options = [];
 		if ($vote_access == 'open') {
 
@@ -144,21 +144,21 @@ class VoteController extends Controller
 			}
 		}
 
-		$request = Request::createFromGlobals();
+		// $request = Request::createFromGlobals();
 
 		// $error = '';
 
 		// all user 
 		$count = VoteUser::where('vote_head_id', $vote->id)->count();
 
-		// if ($request->get('submit_vote_set')) {
+		// // if ($request->get('submit_vote_set')) {
 
-		// 	$error = $this->container['voteManager']->set($id, $request);
+		// // 	$error = $this->container['voteManager']->set($id, $request);
 
-		// 	if ($error === null)
-		// 		return $this->redirectToRoute('vote_show', ['id' => $id]);
+		// // 	if ($error === null)
+		// // 		return $this->redirectToRoute('vote_show', ['id' => $id]);
 
-		// }
+		// // }
 
 		if ($vote->status === 0)
 			$vote_access = "open";
