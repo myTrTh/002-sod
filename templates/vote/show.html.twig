@@ -12,7 +12,7 @@
 
 	<div class="content">
 		{% if access == 'close' %}
-		<form method='post' enctype='multipart/form-data' action='{{ path('vote_show', {id: vote.id }) }}'>
+		<form method='post' action='{{ path('vote_show', {id: vote.id }) }}'>
 			{% for option in vote.options %}
 				{# <label> #}
 					<div class='checkbox-line'>
@@ -43,7 +43,7 @@
 				<div class="vote-result-name">ВСЕГО</div>
 				<div class="vote-result-info">{{ count }}</div>
 				<div class="vote-result-percent"></div>
-			</div>			
+			</div>
 			{% for option in sort_options %}
 				{# CONFIG #}
 				{% if count == 0 %}

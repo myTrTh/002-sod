@@ -105,7 +105,7 @@ class VoteController extends Controller
 
 		$error = 0;
 
-		$vote = VoteHead::latest()->first();
+		$vote = VoteHead::latest()->with('options')->first();
 		if (!is_object($vote) && !($vote instanceof VoteHead))
 			$error = 1;
 		// 	// return $this->render('error/page404.html.twig', array('errno' => 404));
@@ -144,27 +144,25 @@ class VoteController extends Controller
 			}
 		}
 
-		// $request = Request::createFromGlobals();
+		$request = Request::createFromGlobals();
 
-		// $error = '';
+		$error_message = '';
 
 		// all user 
 		$count = VoteUser::where('vote_head_id', $vote->id)->count();
 
-		// // if ($request->get('submit_vote_set')) {
+		if ($request->get('submit_vote_set')) {
 
-		// // 	$error = $this->container['voteManager']->set($id, $request);
+			$error_message = $this->container['voteManager']->set($id, $request);
 
-		// // 	if ($error === null)
-		// // 		return $this->redirectToRoute('vote_show', ['id' => $id]);
-
-		// // }
+		}
 
 		if ($vote->status === 0)
 			$vote_access = "open";
 
 		$response = [
 			'error' => $error,
+			'error_message' => $error_message,
 			'vote' => $vote,
 			'sort_options' => $sort_options,
 			'access' => $vote_access,
