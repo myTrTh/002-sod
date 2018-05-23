@@ -7,7 +7,7 @@
 		{% if app.user.image %}
 			<form method="post" action="{{ path('user_profile') }}">
 				<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>				
-				<input type="submit" name="submit_delete_image" value="х">				
+				<input type="submit" class='l-short' name="submit_delete_image" value="х">				
 			</form>
 			<img class="user-image" src="../../public/images/users/{{ app.user.image }}">
 		{% else %}

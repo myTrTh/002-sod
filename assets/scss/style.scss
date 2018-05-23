@@ -270,6 +270,10 @@ input[type='submit'], .button {
 	font-family: $font_header;
 }
 
+.l-short {
+	min-width: auto !important;
+}
+
 input[type='file'] {
 	border: none;
 	margin-bottom: 1em;

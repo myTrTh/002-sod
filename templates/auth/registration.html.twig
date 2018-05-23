@@ -16,7 +16,7 @@
 			<label>Логин<br> <input class='l-middle' type='text' name='username' value='{{ lastUsername }}'></label>
 			<label>Email <br><input class='l-middle' type='email' name='email' value='{{ lastEmail }}'></label>
 			<label>Пароль <br><input class='l-middle' type='password' name='password'></label>
-			<label>Повторите пароль <br><input type='password' name='repeat_password'></label>
+			<label>Повторите пароль <br><input class='l-middle' type='password' name='repeat_password'></label>
 			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>		
 			<input type='submit' name='submit_registration' value='Регистрация'>
 		</form>

@@ -17,17 +17,5 @@
 		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
 		<input type='submit' name='submit_content_edit' value='Редактировать ссылку'>
 	</form>
-	{% if content.image %}
-		<br>
-		<form method="post" action="{{ path('content_edit', {'type': type, 'id': content.id }) }}">
-			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
-			<input type="submit" name="submit_delete_image" value="x">
-		</form>
-				<div class="content-image">
-					<a href="../../public/images/content/{{ type }}/{{ content.image }}" class='swipebox'>
-						<img src="../../public/images/content/{{ type }}/{{ content.image }}">
-					</a>
-				</div>		
-	{% endif %}	
 
 {% endblock %}
