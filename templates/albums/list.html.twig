@@ -19,7 +19,9 @@
 					<td>
 					{% if content.image %}
 						<div class="content-image">
-							<img src="../../public/images/content/{{ type }}/{{ content.image }}">
+					<a data-fancybox="gallery" href="../../public/images/content/{{ type }}/{{ content.image }}">
+						<img src="../../public/images/content/{{ type }}/{{ content.image }}">
+					</a>
 						</div>
 					{% else %}
 						<div class="content-image">
