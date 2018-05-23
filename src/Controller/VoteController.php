@@ -151,18 +151,11 @@ class VoteController extends Controller
 		// all user 
 		$count = VoteUser::where('vote_head_id', $vote->id)->count();
 
-		if ($request->get('submit_vote_set')) {
-
-			$error_message = $this->container['voteManager']->set($id, $request);
-
-		}
-
 		if ($vote->status === 0)
 			$vote_access = "open";
 
 		$response = [
 			'error' => $error,
-			'error_message' => $error_message,
 			'vote' => $vote,
 			'sort_options' => $sort_options,
 			'access' => $vote_access,
@@ -171,6 +164,20 @@ class VoteController extends Controller
 		];
 
 		return new Response(json_encode($response));
+	}
+
+	public function ajax_send()
+	{
+		$this->container['db'];
+
+		$request = Request::createFromGlobals();
+		$vote = VoteHead::latest()->first();
+		if (!is_object($vote) && !($vote instanceof VoteHead))
+			return new Response(json_encode('Произошла ошибка.'));
+
+		$error = $this->container['voteManager']->set($vote->id, $request);
+
+		return new Response(json_encode($error));
 	}
 
 	public function add()

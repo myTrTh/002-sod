@@ -22,6 +22,9 @@ class TokenManager
 
     public function checkCSRFtoken($form_token)
     {
+        if ($form_token === null)
+            return 'CSRF Token is not valid';
+                        
     	$session = new Session();
  		$session_token = $session->get('csrf_token');
 

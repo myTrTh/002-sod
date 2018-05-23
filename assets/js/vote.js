@@ -30,7 +30,6 @@ function vote_widget() {
 	$.ajaxSetup({cache: false});
 	$.ajax({
 		url: "/ajax/vote/show",
-// 		// type: "POST",
 		dataType: "json",
 		success: function (data) {
 			if (data.error != 1) {
@@ -39,7 +38,7 @@ function vote_widget() {
 
 				if (data.access == 'close') {
 
-					$html1 = '<form method="post">';
+					$html1 = '<div id="error-vote-msg"></div><form id="widget-form" method="post">';
 					$html2 = [];
 					for (var i=0; i < data.vote.options.length; i++) {
 						if (data.vote.type == 1) {
@@ -50,8 +49,7 @@ function vote_widget() {
 					}
 					
 					$html2 = $html2.join('');
-					$html3 = '<input id="widget_vote_send" type="submit" name="submit_vote_set" value="Голосовать"></form>';
-					// $html3 = '<input type="button" id="widget_vote" name="submit_vote_set" value="Голосовать"></form>';
+					$html3 = '<input id="token-input" type="hidden" name="_csrf_token" value=""><input id="widget-vote-send" type="submit" value="Голосовать"></form>';
 
 				} else if (data.access == 'open') {
 					$html1 = '<div class="vote-result-bar"><div class="vote-result-name">ВСЕГО</div><div class="vote-result-info">' + data.count + '</div><div class="vote-result-percent"></div></div>';
@@ -66,11 +64,14 @@ function vote_widget() {
 						}
 
 						if(data.count != 0)
-							procent = (data.sort_options[i].users.length * 100) / data.count;
+							percent = (data.sort_options[i].users.length * 100) / data.count;
 						else
-							procent = 0;
+							percent = 0;
 
-						var formatnumber = procent.toFixed(1);
+						if (percent != 100)
+							var formatnumber = percent.toFixed(1);
+						else
+							var formatnumber = percent;
 
 						$html2[i] = '<div class="vote-option-result"><div class="vote-option-bar"><div class="vote-option-bar-name">' + data.sort_options[i].title + '</div><div class="vote-option-bar-info">' + data.sort_options[i].users.length + '</div><div class="vote-option-bar-percent">' + formatnumber + '%</div></div><div class="vote-progress-bar"><div class="progress-line" style="width: ' + width + '%"></div></div></div>';
 					}
@@ -86,17 +87,25 @@ function vote_widget() {
 
 /* send vote */
 $(document).ready(function(){
-	$(document).on('submit', '#widget_vote_send', function(e){
+	$(document).on('submit', '#widget-form', function(e){
 		e.preventDefault();
-		var form = $('#vote_send');
+		var token = $('#vote-content').attr('data-token');
+		var token_input = $('#token-input');
+		token_input.val(token);
+		var form_data = $('#widget-form').serialize();
 		$.ajaxSetup({cache: false});
 		$.ajax({
 			url: '/ajax/vote/send',
-			type: form.attr('method'),
-			data: form.serialize(),
-			// dataType: 'json',
-			success: function() {
-				vote_widget();
+			type: "POST",
+			data: form_data,
+			dataType: "json",
+			success: function (data) {
+				if (data) {
+					var error_field = $("#error-vote-msg");
+					error_field.html(data);
+				} else {
+					vote_widget();
+				}
 			}
 		});
 	});

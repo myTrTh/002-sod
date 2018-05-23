@@ -60,5 +60,6 @@ $routes->add('vote_add', new Route('/vote/add', array('_controller' => 'App\Cont
 $routes->add('vote_edit', new Route('/vote/edit/{id}', array('_controller' => 'App\Controller\VoteController::edit'), array('id' => '[0-9]+')));
 $routes->add('vote_delete', new Route('/vote/delete/{id}', array('_controller' => 'App\Controller\VoteController::delete'), array('id' => '[0-9]+')));
 $routes->add('ajax_vote_show', new Route('ajax/vote/show', array('_controller' => 'App\Controller\VoteController::ajax_show')));
+$routes->add('ajax_vote_send', new Route('ajax/vote/send', array('_controller' => 'App\Controller\VoteController::ajax_send')));
 
 return $routes;
