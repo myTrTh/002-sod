@@ -23,7 +23,7 @@ class View
 		$this->twig = new Twig_Environment($loader, array(
 	   		'cache' => __DIR__.'/../../var/cache/twig/compilation_cache',
 	   		'auto_reload' => true,
-	   		'debug' => true,
+	   		'debug' => false,
 		));
 
 		$router = $container['router'];

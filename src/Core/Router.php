@@ -4,7 +4,9 @@ namespace App\Core;
 
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException
 
 class Router 
 {
@@ -12,16 +14,21 @@ class Router
 	private $matcher;
 	private $requestContext;
 	private $routes;
-	protected $container;
 
 	public function __construct($routes)
 	{
-		$this->routes = $routes;
-		$this->request = Request::createFromGlobals();
-		$this->requestContext = new RequestContext();
-		$this->requestContext->fromRequest($this->request);
+		try {
+			$this->routes = $routes;
+			$this->request = Request::createFromGlobals();
+			$this->requestContext = new RequestContext();
+			$this->requestContext->fromRequest($this->request);
 
-		$this->matcher = new UrlMatcher($this->routes, $this->requestContext);
+			$this->matcher = new UrlMatcher($this->routes, $this->requestContext);
+		} catch (ResourceNotFoundException $e) {
+			echo 'here';
+			$response = new Response('Not Found', 404);
+			$response->send();
+		}
 	} 
 
 	public function run(): array
