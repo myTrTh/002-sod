@@ -43,7 +43,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
         return [
             'app' => [
                 'user' => $this->userManager->getUser(),
-                'path' => $this->container['config']['assets']
+                'path' => $this->container['assets']->assets()
             ]
         ];
     }

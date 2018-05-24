@@ -8,7 +8,7 @@ use App\Model\Content;
 
 class ContentManager extends Manager
 {
-	private $dir = __DIR__.'/../../public/images/content';
+	private $dir = '/images/content';
 
 	public function add($type, $request)
 	{

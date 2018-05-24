@@ -6,6 +6,17 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Upload {
 
+	private $container;
+	private $pre_path;
+
+	public function __construct($container)
+	{
+		$this->container = $container;
+
+		$this->pre_path = $this->container['config']['filepath'];
+	}
+
+
 	public function upload(UploadedFile $file, string $directory,  int $fileSize, int $mustBeWidth = 1000, int $mustBeHeight = 1000) {
 
 		# create file name
@@ -28,9 +39,9 @@ class Upload {
 
 		$fullName = $fileName.".".$exp;
 
-		$file->move($directory, $fullName);
+		$file->move($this->pre_path.$directory, $fullName);
 
-		$this->resize($directory."/".$fullName, $mustBeWidth, $mustBeHeight);
+		$this->resize($this->pre_path.$directory."/".$fullName, $mustBeWidth, $mustBeHeight);
 		
 		return array(true, $fullName);
 	}
@@ -40,7 +51,7 @@ class Upload {
 
 		if ($image == null)
 			return;
-		$fullPath = $directory."/".$image;
+		$fullPath = $this->pre_path.$directory."/".$image;
 		if(file_exists($fullPath))
 			unlink($fullPath);
 	}

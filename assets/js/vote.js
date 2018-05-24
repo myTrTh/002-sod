@@ -79,7 +79,7 @@ function vote_widget() {
 					$html3 = '';
 				}
 				var content = $('#vote-content');
-				content.html($html1 + $html2 + $html3);
+				content.html($html1 + $html2 + $html3 + '<br>');
 			}
 		}
 	});

@@ -145,7 +145,7 @@ class UserManager extends Manager
 		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
 			return $error;
 
-		$dir = __DIR__.'/../../public/images/users';
+		$dir = '/images/users';
 
 		$uploadedFile = $request->files->get('userfile');
 
@@ -174,7 +174,7 @@ class UserManager extends Manager
 		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
 			return $error;
 
-		$dir = __DIR__.'/../../public/images/users';
+		$dir = 'images/users';
 
 		$user = $this->container['userManager']->getUser();
 		if (!is_object($user) && !($user instanceof User))

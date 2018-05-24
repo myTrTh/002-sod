@@ -106,9 +106,12 @@ class VoteController extends Controller
 		$error = 0;
 
 		$vote = VoteHead::latest()->with('options')->first();
-		if (!is_object($vote) && !($vote instanceof VoteHead))
-			$error = 1;
-		// 	// return $this->render('error/page404.html.twig', array('errno' => 404));
+		if (!is_object($vote) && !($vote instanceof VoteHead)) {
+			$response = [
+				'error' => 1
+			];
+			return new Response(json_encode($response));
+		}
 
 		// // if no user
 		$user = $this->container['userManager']->getUser();

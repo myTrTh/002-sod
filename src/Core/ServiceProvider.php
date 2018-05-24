@@ -11,6 +11,7 @@ use App\Utils\RoleManager;
 use App\Utils\PermissionManager;
 use App\Utils\TextMode;
 use App\Utils\Dater;
+use App\Utils\Assets;
 use App\Utils\AdminManager;
 use App\Utils\ContentManager;
 use App\Utils\VoteManager;
@@ -57,12 +58,15 @@ class ServiceProvider
 		};
 		$this->container['guestbookManager'] = function ($c) {
 			return new GuestbookManager($c);
+		};
+		$this->container['assets'] = function ($c) {
+			return new Assets($c);
 		};		
 		$this->container['tokenManager'] = function () {
 			return new TokenManager;
 		};
-		$this->container['upload'] = function () {
-			return new Upload;
+		$this->container['upload'] = function ($c) {
+			return new Upload($c);
 		};
 		$this->container['userManager'] = function ($c) {
 			return new UserManager($c);

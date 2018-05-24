@@ -27,5 +27,6 @@ return [
 		3 => 'ROLE_ADMIN',
 		4 => 'ROLE_SUPER_ADMIN'
 	],
-	'assets'                        => '../public'
+	'assets'                        => '../../public',
+	'filepath'                      => __DIR__.'/../public/'
 ];
