@@ -17,11 +17,11 @@
 					<td>
 					{% if content.image %}
 						<div class="content-image">
-							<img src="../../public/images/content/{{ type }}/{{ content.image }}">
+							<img src="{{ app.path }}/images/content/{{ type }}/{{ content.image }}">
 						</div>
 					{% else %}
 						<div class="content-image">
-							<img src="../../public/images/interface/no-image-album.jpg">
+							<img src="{{ app.path }}/images/interface/no-image-album.jpg">
 						</div>						
 					{% endif %}
 					</td>

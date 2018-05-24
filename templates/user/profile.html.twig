@@ -9,7 +9,7 @@
 				<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>				
 				<input type="submit" class='l-short' name="submit_delete_image" value="х">				
 			</form>
-			<img class="user-image" src="../../public/images/users/{{ app.user.image }}">
+			<img class="user-image" src="{{ app.path }}/images/users/{{ app.user.image }}">
 		{% else %}
 			<i class="profile-image fa fa-user" aria-hidden="true"></i><br>
 		{% endif %}

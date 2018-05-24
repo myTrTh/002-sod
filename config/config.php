@@ -26,5 +26,6 @@ return [
 		2 => 'ROLE_MODERATOR',
 		3 => 'ROLE_ADMIN',
 		4 => 'ROLE_SUPER_ADMIN'
-	]
+	],
+	'assets'                        => '../public'
 ];

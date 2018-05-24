@@ -18,5 +18,6 @@ try {
 	
 	$error = $t->getMessage();
 	$error .= '<br>'.$t->getFile().' on line: '.$t->getLine().'<br>';
+	echo $error;
 	error_log($error, 3, __DIR__.'/../var/log/error.log');	
 }

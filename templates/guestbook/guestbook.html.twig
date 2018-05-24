@@ -23,9 +23,7 @@
 				<div class="guestbook-head-user">{{ message.author.username }}</div>
 				<div class="guestbook-image">
 				{% if message.author.image %}
-						<a href="../../public/images/users/{{ message.author.image }}" class="imagelightbox">
-							<img src="../../public/images/users/{{ message.author.image }}">
-						</a>
+					<img src="{{ app.path }}/images/users/{{ message.author.image }}">
 				{% else %}
 						<i class="guestbook-default-image fa fa-user" aria-hidden="true"></i><br>
 				{% endif %}

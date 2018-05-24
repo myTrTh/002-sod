@@ -78,7 +78,7 @@ class ServiceProvider
 		};
 		$this->container['dater'] = function() {
 			return new Dater();
-		};		
+		};
 		$this->container['roleManager'] = function ($c) {
 			return new RoleManager($c);
 		};

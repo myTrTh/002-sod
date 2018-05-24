@@ -14,7 +14,7 @@
 			<h3>{{ content.title }}</h3>
 			{% if content.image %}
 				<div class="content-image">
-					<img src="../../public/images/content/{{ type }}/{{ content.image }}">
+					<img src="{{ app.path }}/images/content/{{ type }}/{{ content.image }}">
 				</div>
 			{% endif %}
 			<div class="content-article">
