@@ -36,7 +36,7 @@ class ContentManager extends Manager
 
 		if ($uploadedFile) {
 			$upload = $this->container['upload'];
-			$file = $upload->upload($uploadedFile, $this->dir.'/'.$type, 150000);
+			$file = $upload->upload($uploadedFile, $this->dir.'/'.$type, 200000);
 			if ($file[0]) {
 				$content->image = $file[1];
 			} else {

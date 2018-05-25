@@ -19,8 +19,9 @@
         "twig/twig": "^2.4",
         "symfony/twig-bridge": "^4.0",
         "illuminate/database": "^5.6",
-        "swiftmailer/swiftmailer": "^6.0",
-        "codeception/codeception": "^2.4"
+        "swiftmailer/swiftmailer": "^6.0"
     },
-    "require-dev": {}
+    "require-dev": {
+        "codeception/codeception": "^2.4"
+    }
 }

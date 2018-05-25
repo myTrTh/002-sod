@@ -20,9 +20,6 @@
 			<div class="content-article">
 				{{ textMode(content.article)|raw|nl2br }}
 			</div>
-			<div class="content-info">
-				- <a href="#">{{ content.author.username }}</a>, {{ content.created_at|date('d.m.Y') }}
-			</div>
 		</div>
 	<form method='post' action='{{ path('content_delete', {'type': type, 'id': content.id }) }}'>
 		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>

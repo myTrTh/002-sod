@@ -1,12 +1,12 @@
 // import
-@import '_flatpickr.min.css';
-@import '_fancybox.min.css';
+// @import '_flatpickr.min.css';
+// @import '_fancybox.min.css';
 @import '_font-awesome.scss';
 
 // fonts
 @font-face {
 	font-family: Open Sans Condensed Light;
-	src: url('/../public/fonts/OpenSansCondensed-Light.ttf')
+	src: url('../../public/fonts/OpenSansCondensed-Light.ttf');
 }
 
 $font_header: Open Sans Condensed Light;
