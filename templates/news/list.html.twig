@@ -35,7 +35,7 @@
 					</a>
 				</span>
 				{% endif %}
-				- <a href="#">{{ content.author.username }}</a>, {{ content.created_at|date('d.m.Y') }}
+				- {{ content.author.username }}, {{ content.created_at|date('d.m.Y') }}
 			</div>
 		</div>
 	{% endfor %}

@@ -7,6 +7,7 @@
 @font-face {
 	font-family: Open Sans Condensed Light;
 	src: url('../../public/fonts/OpenSansCondensed-Light.ttf');
+	// src: url('/fonts/OpenSansCondensed-Light.ttf');
 }
 
 $font_header: Open Sans Condensed Light;
@@ -546,7 +547,7 @@ input[type='submit']:hover, .button:hover {
 	display: inline-block;
 	border-radius: 0 7px 7px 0;
 	border: solid 1px #dcdcdc;
-	margin-bottom: 5px;
+	margin-bottom: -10px;
 	font-size: .8rem;
 	width: 100%;
 	// color: $color_grey;
@@ -559,7 +560,7 @@ input[type='submit']:hover, .button:hover {
 	font-size: 2em;
 }
 
-.hidden-date {
+.hidden {
 	display: none;
 }
 

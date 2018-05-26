@@ -40,8 +40,9 @@ class Application
 
 		} catch (ResourceNotFoundException $e) {
 	
-			$error = $e->getMessage();
-			$error .= '<br>'.$e->getFile().' on line: '.$e->getLine().'<br>';
+			$error = "\n".date('Y-m-d H:i:s');
+			$error .= ' '.$e->getMessage();
+			$error .= $e->getFile().' on line: '.$e->getLine();
 			// echo $error;
 			error_log($error, 3, __DIR__.'/../var/log/error.log');	
 
@@ -54,8 +55,9 @@ class Application
 
 		} catch (Throwable $t) {
 
-			$error = $t->getMessage();
-			$error .= '<br>'.$t->getFile().' on line: '.$t->getLine().'<br>';
+			$error = "\n".date('Y-m-d H:i:s');
+			$error .= ' '.$t->getMessage();
+			$error .= $t->getFile().' on line: '.$t->getLine();
 			// echo $error;
 			error_log($error, 3, __DIR__.'/../var/log/error.log');	
 

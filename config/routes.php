@@ -41,7 +41,7 @@ $routes->add('permission_edit', new Route('/permission/edit/{id}', array('_contr
 $routes->add('permission_delete', new Route('/permissions/delete/{id}', array('_controller' => 'App\Controller\Admin\PermissionController::delete'), array('id' => '[0-9]+')));
 
 // admin routes
-$routes->add('admin_users', new Route('/admin', array('_controller' => 'App\Controller\Admin\AdminController::users')));
+$routes->add('admin_users', new Route('/admin', array('_controller' => 'App\Controller\Admin\AdminController::users', 'page' => 1), array('type' => '[0-9]+')));
 $routes->add('admin_user', new Route('/admin/user/{id}', array('_controller' => 'App\Controller\Admin\AdminController::user'), array('id' => '[0-9]+')));
 
 // content routes

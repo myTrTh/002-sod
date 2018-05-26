@@ -42,7 +42,8 @@
 				<div class="guestbook-content-post" id="message{{ message.id }}">
 					{{ textMode(message.message)|raw|nl2br }}
 				</div>
-				<div class="hidden-date" id="hidden-date-{{ message.id }}">{{ message.created_at }}</div>
+				<div class="hidden" id="hidden-date-{{ message.id }}">{{ message.created_at }}</div>
+				<div class="hidden" id="hidden-message-{{ message.id }}">{{ message.message }}</div>
 			</div>
 		</div>
 	{% endfor %}
@@ -50,6 +51,6 @@
 	<br><br>
 	{# page navigation #}
 	{% set page_name = 'guestbook' %}
-	{% include 'pagenavigation.html.twig' %}	
+	{% include 'pagenavigation.html.twig' %}
 
 {% endblock %}

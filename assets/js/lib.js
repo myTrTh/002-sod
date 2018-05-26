@@ -59,7 +59,7 @@ $(function(){
 		var id = quoteid.substr(5);
 		var user = $(this).parent().parent().parent().children().children().html().trim();
 		var date = $('#hidden-date-' + id).text().trim();
-		var message = $('#message' + id).text().trim();
+		var message = $('#hidden-message-' + id).text().trim();
 		var quote_text = '[quote author=' + user + ' date=' + date +' post=' + id + ']\n' + message + '\n[/quote]\n\n';
 		var textarea = $('textarea');
 		var start = textarea[0].selectionStart;
@@ -71,8 +71,6 @@ $(function(){
 		textarea.val(start_text + quote_text + end_text);
 		textarea.focus();
 		textarea[0].setSelectionRange(start+quote_text.length, start+quote_text.length);
-
-		// $("html, body").animate({ scrollTop: 320 }, 500);
 
 		return false;
 	});

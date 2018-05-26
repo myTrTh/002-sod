@@ -11,17 +11,25 @@ use App\Utils\RoleManager;
 
 class AdminController extends Controller
 {
-	public function users()
+	public function users($page)
 	{
 		$roles = $this->container['userManager']->getRoles();
 		if (!$this->container['userManager']->isAccess('ROLE_MODERATOR') && !$this->container['userManager']->isAccess('ROLE_ADMIN') && !$this->container['userManager']->isAccess('ROLE_SUPER_ADMIN'))
 			return $this->render('error/page403.html.twig', array('errno' => 403));
 
+		$this->pageKeeper($page);
 		$this->container['db'];
-		$users = User::all();
+
+		$limit = 20;
+		$offset = ($page - 1) * $limit;
+		$users = User::orderBy('id', 'desc')->offset($offset)->limit($limit)->get();
+		$count = User::orderBy('id', 'desc')->count();		
 
 		return $this->render('admin/users.html.twig', [
-			'users' => $users
+			'users' => $users,
+			'page' => $page,
+			'limit' => $limit,
+			'count' => $count			
 		]);
 	}
 

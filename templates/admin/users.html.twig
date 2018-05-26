@@ -5,7 +5,12 @@
 {% block body %}
 
 	{% for user in users %}
-		<a href='{{ path('admin_user', {'id': user.id }) }}'>{{ user.username }}</a><br>
+		<a href='{{ path('admin_user', {'id': user.id }) }}'>{{ user.username }}</a><br><br>
 	{% endfor %}
+
+	<br><br>
+	{# page navigation #}
+	{% set page_name = 'admin_users' %}
+	{% include 'pagenavigation.html.twig' %}	
 
 {% endblock %}

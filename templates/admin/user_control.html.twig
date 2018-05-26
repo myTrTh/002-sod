@@ -27,6 +27,7 @@
 					{% for permission in role.permissions %}
 						{% if  permission.id in user.permissions.keyBy('id')|keys %}
 							{{ permission.permission }}<br>
+							{{ permission.description }}<br>
 						{% endif %}
 					{% endfor %}
 				{% endif %}
@@ -74,6 +75,7 @@
 						{% else %}
 							<input type='checkbox' name='permissions[]' value='{{ permission.id }}'>{{ permission.permission }}<br>
 						{% endif %}
+						{{ permission.description }}
 						</div>
 					{% endfor %}
 				{% endif %}
@@ -86,6 +88,7 @@
 						{% else %}
 							<input type='checkbox' name='permissions[]' value='{{ permission.id }}'>{{ permission.permission }}<br>
 						{% endif %}
+						{{ permission.description }}						
 						</div>
 					{% endfor %}
 				{% endif %}
@@ -98,6 +101,7 @@
 						{% else %}
 							<input type='checkbox' name='permissions[]' value='{{ permission.id }}'>{{ permission.permission }}<br>
 						{% endif %}
+						{{ permission.description }}						
 						</div>
 					{% endfor %}
 				{% endif %}

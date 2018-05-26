@@ -86,7 +86,8 @@ class TextMode
 
 					if($matches[4]) {
 						$post = $matches[4];
-						$post = "<a class='nostyle' href='/post/".$post."'>".$author.$date."</a>";
+						// $post = "<a class='nostyle' href='/post/".$post."'>".$author.$date."</a>";
+						$post = $author.$date;
 					} else {
 						$post = $author.$date;
 					}
