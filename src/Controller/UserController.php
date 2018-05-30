@@ -17,12 +17,16 @@ class UserController extends Controller
 
 		$request = Request::createFromGlobals();
 		if ($request->get('submit_upload_image')) {
+			if ($request->files->get('userfile')) {
 
-			$userManager = $this->container['userManager'];
-			$error = $userManager->addImage($request);
+				$userManager = $this->container['userManager'];
+				$error = $userManager->addImage($request);
 
-			if ($error === null)
-				$this->redirectToRoute('user_profile');
+				if ($error === null)
+					$this->redirectToRoute('user_profile');
+			} else {
+				$error = "Вы не выбрали изображение";
+			}
 		}
 
 		if ($request->get('submit_delete_image')) {
